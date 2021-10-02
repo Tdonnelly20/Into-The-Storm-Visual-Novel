@@ -87,7 +87,7 @@ label start:
         "{i}Keep listening to the radio.{\i}":
             hide screen countdown
             Radio """
-            I have promised you for many months that one day we would rise from the pitted remains of this legendary city to claim the wastelands of Duoterra!
+            I have promised you for many months that one day, we would rise from the pitted remains of this legendary city to claim the wastelands of Duoterra!
 
             To finish the work that was begun hundreds of years ago to turn these landscapes from harsh to hospitable!
 
@@ -139,7 +139,7 @@ label start:
         jump choice2_end
     label choice2_end:
         show pass coat i
-        "{i}Passenger looks down, shaking her head.{\i}"
+        "{i}The passenger looks down and shakes her head.{\i}"
         show pass coat
         pov "Alright, hop in."
 
@@ -156,9 +156,9 @@ label start:
 
     define Passenger=Character("Vesta")
     show pass qu sit s
-    pov "I'm [protagname] by the way."
+    pov "I'm [protagname], by the way."
     show pass qu sit t
-    Passenger "Oh, nice to meet you [protagname]. I'm Vesta."
+    Passenger "Oh, nice to meet you, [protagname]. I'm Vesta."
     label choice3:
         $ timer_jump = 'menu_neutral3'
     show screen countdown
@@ -197,8 +197,8 @@ label start:
         stop background_music fadeout 1.0
         play background_music "audio/mus_ambient.mp3" fadein 3.0
         show pass qu sit s
-        "{i}The radio shuts off abruptly, startling passenger.{\i}"
-        Passenger "Why did the radio just go off?"
+        "{i}The radio shuts off abruptly, startling the passenger.{\i}"
+        Passenger "Why did the radio just shut off?"
     label choice4:
         $ timer_jump = 'menu_neutral4'
     show screen countdown
@@ -233,7 +233,7 @@ label start:
         pov "Is this your first time out of the city or something?"
         "{i}[Passenger] nods.{\i}"
         show pass qu sit i
-        pov "Huh that's weird, I can't imagine never leaving the cities."
+        pov "Huh. That's weird, I can't imagine never leaving the cities."
         jump choice4_end
     label choice4_end:
         play sound 'audio/sfx_space-engine.mp3'
@@ -270,15 +270,15 @@ label start:
         "No, we'll be fine.":
             hide screen countdown
             show pass qu sit s
-            pov "Nah, the forecastors always make the storms a bigger deal then they are."
+            pov "Nah, the forecastors always make the storms a bigger deal than they are."
             Passenger "Ok, if you're sure."
-            pov "We’ll be fine, but we’re gonna need to refuel if we’re gonna make it to Viacalleum"
+            pov "We’ll be fine, but we’ll need to refuel if we’re gonna make it to Viacalleum."
             jump Storm_Warning_end
     label menu_neutral_Storm_Warning:
         hide screen countdown
         show pass qu sit s
         pov "Too late to turn back now."
-        pov "Also, we’re gonna need to refuel if we’re gonna make it to Viacalleum."
+        pov "Also, we’ll need to refuel if we’re gonna make it to Viacalleum."
         jump choice7_end
     label Storm_Warning_end:
     scene ext_rfstation
@@ -289,10 +289,10 @@ label start:
     play sound 'audio/sfx_jingle.mp3'
     pause 0.5
     play Radio 'audio/mus_Radio-static.mp3'
-    Radio "Gatherings in support of Dometellium's mayor have popped up all across Duoterra!"
-    Radio "Many gatherers are excited about Dometellium's mayor run for Governor."
+    Radio "Gatherings in support of Domatellium's mayor have popped up all across Duoterra!"
+    Radio "Many gatherers are excited about Domatellium's mayor running for Governor."
     stop Radio
-    define clerk =Character("Attendant")
+    define clerk = Character("Attendant")
     label choice5:
         $ timer_jump = 'menu_neutral5'
     show screen countdown
@@ -379,7 +379,7 @@ label start:
         "TBD CONVERSATION ABOUT WHAT REFUELING ATTENDANT SAID"
         jump choice6_end
     label anti_history_conversation:
-        pov "Yeah, I don’t see a point in repeating history that has been proven not to work."
+        pov "Yeah, I don’t see a point in repeating history that's been proven not to work."
         "TBD CONVERSATION ABOUT WHAT REFUELING ATTENDANT SAID"
         jump choice6_end
     label passenger_monologue:
@@ -405,17 +405,17 @@ label start:
     menu:
         "Are you ok?":
             hide screen countdown
-            if friendship>0:
+            if friendship > 0:
                 jump meaningful_conversation_about_past
-            if friendship <=0:
+            if friendship <= 0:
                 jump combative_conversation_about_relationship_with_passenger
         "{i}Ignore Passenger{\i}":
             hide screen countdown
-            "{i}You ignore passenger{\i}"
+            "{i}You ignore the passenger.{\i}"
             jump choice7_end
     label menu_neutral7:
         hide screen countdown
-        "{i}You ignore passenger{\i}"
+        "{i}You ignore the passenger.{\i}"
         jump choice7_end
     label meaningful_conversation_about_past:
         "TBD PASSENGER EXPLAINS WHAT HAPPENED AND PART OF WHY THEY’RE LEAVING"
@@ -428,8 +428,8 @@ label start:
     scene rd front
     show cp back
     show pass gr sit n
-    pov "I’m going to take a break up ahead. There’s an old vista that’s high enough I might be able to catch the storm radio to check on that storm."
-    pov "It’s a pretty good view if you want you should suit up to get a firsthand look."
+    pov "I’m going to take a break up ahead. There’s an old vista that’s high enough to catch the storm radio to figure out what's going on with the weather."
+    pov "It’s a pretty good view. But if you want to get a firsthand look, you should suit up."
     show pass gr sit s
     Passenger "Why? Do you think the storm will cause trouble after all?"
     "{i}You are worried about the storm.{\i}"
@@ -460,13 +460,13 @@ label start:
     menu:
         "{i}Fiddle with radio{\i}":
             "{i}You accidentally tune the radio to the news station.{\i}"
-            Radio "--thank you, Doctor. Now we’ve got some breaking news here folks, and I’m afraid it could be somewhat distressing to those following the ongoing elections over in Domatellium."
+            Radio "--thank you, Doctor. Now we’ve got some breaking news here, folks, and I’m afraid it could be somewhat distressing to those following the ongoing elections over in Domatellium."
             "{i}PASSENGER APPEARS IN DOORWAY{\i}"
             Passenger "Oh, you got the radio to work."
-            Radio "According to a direct wire we received only minutes ago, it appears that following a call for a recount by the former Governor of the region riots have broken out--"
+            Radio "According to a direct wire we received only minutes ago, it appears that following a call for a recount by the former Governor of the region, riots have broken out--"
             Passenger "What?!"
             "TBD PASSENGER HEARS ABOUT RIOTS IN HER OLD NEIGHBOURHOOD IN DOMATELLIUM."
-            "{i}[Passenger] seems quite shaken by the news, hastily throwing her coat on and smashing her helmet on over her head before rushing outside.{\i}"
+            "{i}[Passenger] seems quite shaken by the news, hastily throwing her coat on and throwing her helmet on over her head before rushing outside.{\i}"
     label radioChoice:
         $ timer_jump = 'menu_radioChoice'
     show screen countdown
@@ -474,12 +474,12 @@ label start:
         "Check on [Passenger].":
             hide screen countdown
             jump choice8
-        "{i}Keep tuning for weather channel.{\i}":
+        "{i}Keep tuning for the weather channel.{\i}":
             hide screen countdown
             jump full_weather_Report
     label radioChoice_neutral:
         hide screen countdown
-        "{i}You keep tuning for weather channel.{\i}"
+        "{i}You keep tuning for the weather channel.{\i}"
         jump full_weather_Report
     label full_weather_Report:
         "TBD RADIO EXPLAINS STORM IS REACHING RECORD LEVELS AND TRAVEL IS NOT RECOMMENDED"
@@ -534,7 +534,7 @@ label start:
         "{i}She gets to her feet angrily, standing with a childish look of fury on her face.{\i}"
         Passenger "Just DRIVE, damnit!"
         "{i}You agree begrudgingly, entering the cockpit and starting the craft.{\i}"
-        "{i}Even as the room fills with the wine of the engines, You can still hear her stomps and sniffles from down below.{\i}"
+        "{i}Even as the room fills with the whine of the engines, you can still hear her stomps and sniffles from down below.{\i}"
         jump checkRadio_end
     label checkRadio_neu:
         Passenger "Ugh, I don't know why I even bother."
@@ -543,9 +543,9 @@ label start:
         "{i}You nod, and head to the cockpit.{\i}"
         jump checkRadio_end
     label checkRadio_pos:
-        Passenger "Could you not please? I’ve had enough of that damn thing for the rest of my life."
+        Passenger "Could you not, please? I’ve had enough of that damn thing for the rest of my life."
         "{i}You open your mouth to explain that it might offer some information on the duration of the storm and how we might avoid it, but she seems to read my thoughts.{\i}"
-        Passenger "Really? What new information are you going to learn from that thing!"
+        Passenger "Really!? What new information are you going to learn from that thing?"
         Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacalleum. Please."
         "{i}You nod, and begin to head to the cockpit{\i}"
         pov "Just brace yourself though. This is going to be a...bumpy ride."
@@ -553,7 +553,7 @@ label start:
     label checkRadio_end:
         "{i}You manage to cross nearly half the remaining distance to Viacelleum before the storm hits.{\i}"
         "{i}But when it hits, it hits hard.{\i}"
-        "{i}Hailstones the size of your hand slam against the craft, scratching paint and causing the entire chassis to shake, pushing us further and further to one side of the road.{\i}"
+        "{i}Hailstones the size of your hand slam against the craft, scratching paint and causing the entire chassis to shake, pushing the craft further and further to one side of the road.{\i}"
         "{i}Then, without warning, a rock nearly the size of your head comes flying out of nowhere. It crashes into the right side thruster, gouging the windshield with paneling and bits of metal dispersed by the collision.{\i}"
         "{i}The crash is quick.{\i}"
         "{i}As soon as it loses a thruster, the craft dives for the ground, burying its nose as it slices a deep trench into the mud.{\i}"
@@ -659,7 +659,7 @@ label start:
     show text "Thank you for playing a Spaced-Out Studios Original" at truecenter with fade
     pause 2
     hide text with Dissolve(2.0)
-    show text "Programming by Tate Donnelly{p}{p}Art by Nathan Booth{p}{p}Music and Sound Composition by Benny Klaiman{p}{p}Writing by Tate Donnelly and Nathan Booth" at truecenter with fade
+    show text "Programming by Tate Donnelly{p}{p}Art by Nathan Booth{p}{p}Original Music/Proofreading/Tech Support by Benny Klaiman{p}{p}Writing by Tate Donnelly and Nathan Booth" at truecenter with fade
     pause 10
     hide text with Dissolve(2.0)
     show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Strong Howling Wind Sound 2 Hours, Swaying Spruce Trees in The Wind By Relaxing Sounds of Nature{p}{p}Heavy Rain Sounds at Night - Sleep, Study, Relax | Ambient Noise Rainstorm, @Ultizzz day#69 By Ultimate Ambient Noise Soundzzz" at truecenter with fade
