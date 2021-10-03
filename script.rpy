@@ -16,7 +16,7 @@ label start:
     python:
         protagName = renpy.input("What is your name?", length=32)
         protagName = protagName.strip()
-    define pov= Character("[protagName]")
+    define Pilot= Character("[protagName]")
 
     """This game relies heavily on all the choices you make and don't make.
 
@@ -119,24 +119,24 @@ label start:
     menu:
         "Really? Wouldn't a transport be faster?":
             hide screen countdown
-            pov "Really? Wouldn't a transport be faster?"
+            Pilot "Really? Wouldn't a transport be faster?"
             Passenger "Please, can you just take me?"
-            pov "Fine. Do you have any bags?"
+            Pilot "Fine. Do you have any bags?"
             jump choice2_end
         "Yeah, of course.":
             hide screen countdown
-            pov "Yeah, of course. Do you have any bags?."
+            Pilot "Yeah, of course. Do you have any bags?."
             show pass coat r
             jump choice2_end
     label menu_neutral2:#If the Player doesn't make a choice
         hide screen countdown
-        pov "Sure."
+        Pilot "Sure."
         jump choice2_end
     label choice2_end:
         show pass coat r
         "{i}She looks down and shakes her head.{\i}"
         show pass coat
-        pov "Alright, hop in."
+        Pilot "Alright, hop in."
 
     hide pass
     hide cp
@@ -166,25 +166,25 @@ label start:
         "{i}You reach to turn on the radio, thinking she is finished talking, but your passenger breaks the awkward silence before you can turn it on.{\i}"
         show pass qu sit i
         Passenger "Is traffic always this bad?"
-        pov "Not really, I think there’s some event happening tomorrow, but I’m not sure."
+        Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
         "{i}She looks uncomfortable.{\i}"
         jump choice3_end
     label friendly_small_talk_CS3:
         $ friendship += 1
-        pov "So why are you heading to Viacaellum? Are you going on vacation?"
+        Pilot "So why are you heading to Viacaellum? Are you going on vacation?"
         "{i}She pauses for a second, looking out the window.{\i}"
         show pass qu sit t
         Passenger "Sort of, I really just had to get out of town."
-        pov "That’s fair, it’s good to get out of the city every once and a while."
+        Pilot "That’s fair, it’s good to get out of the city every once and a while."
         Passenger "So, how long have you been a pilot?"
-        pov "It feels like I’ve been doing this forever."
+        Pilot "It feels like I’ve been doing this forever."
         Passenger "Do you like being a pilot?"
         menu:
             "It's my life's purpose":
-                pov "Yeah, I love being able to travel around the planet, getting a break from it all."
+                Pilot "Yeah, I love being able to travel around the planet, getting a break from it all."
                 jump job_talk_end
             "It's...alright.":
-                pov "Ah, you know, it’s alright I guess. It’s what I know how to do, so I don’t really get the luxury of a choice."
+                Pilot "Ah, you know, it’s alright I guess. It’s what I know how to do, so I don’t really get the luxury of a choice."
                 jump job_talk_end
     label job_talk_end:
         "{i}She falls silent for a few minutes, watching buildings pass as you snake your way through Domatellium.{\i}"
@@ -192,21 +192,21 @@ label start:
         "{i}You reach to turn on the radio, thinking she is finished talking, but your passenger breaks the awkward silence before you can turn it on.{\i}"
         show pass qu sit i
         Passenger "Is traffic always this bad?"
-        pov "Not really, I think there’s some event happening tomorrow, but I’m not sure."
+        Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
         "{i}She looks uncomfortable.{\i}"
         jump choice3_end
     label hostile_small_talk_CS3:
         $friendship -= 1
-        pov "Why are you heading all the way to Viacaellum without any luggage? It’s a pretty long trip for a spur-of-the-moment decision."
+        Pilot "Why are you heading all the way to Viacaellum without any luggage? It’s a pretty long trip for a spur-of-the-moment decision."
         show pass qu sit i
         Passenger "What do you mean big trip? All the advertisements say it’s only a few hours!"
-        pov "Yeah, by transport. It’s nearly a week if I take you. What did you think, that I can get to sub orbit with this thing? Viacaellum is a quarter of the way across this planet!"
+        Pilot "Yeah, by transport. It’s nearly a week if I take you. What did you think, that I can get to sub orbit with this thing? Viacaellum is a quarter of the way across this planet!"
         show pass qu s
         Passenger "Fine. I don't care how long it takes."
         "The passenger crosses her arms and stares out the window, glaring at the buildings slowly inching past."
         show pass qu sit i
         Passenger "Is traffic always this bad?"
-        pov "Not really, I think there’s some event happening tomorrow, but I’m not sure."
+        Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
         "{i}The passenger sighs heavily, turning back to the window.{\i}"
         jump choice3_end
     label choice3_end:
@@ -248,33 +248,33 @@ label start:
         show pass qu sit n
         Passenger "Oh, it does that sometimes."
         "{i}She shifts in her seat.{\i}"
-        pov "There's an open bunk for you below the ship"
+        Pilot "There's an open bunk for you below the ship"
         "{i}Still looking uncomfortable, the passenger heads down below.{\i}"
         jump choice4_end
     label friendly_4:
         $ friendship += 1;
-        pov "Once you get out of the domes, you lose reception. Something to do with ambient radiation or something."
-        pov "There are a few spots where we'll be able to pick it up again, but we won't have it for most of the trip."
+        Pilot "Once you get out of the domes, you lose reception. Something to do with ambient radiation or something."
+        Pilot "There are a few spots where we'll be able to pick it up again, but we won't have it for most of the trip."
         show pass qu sit s
         Passenger "Oh."
         "{i}The passenger looks unsettled, shifting in her seat.{\i}"
-        pov "Have you ever left Domatellium before?"
+        Pilot "Have you ever left Domatellium before?"
         show pass qu sit t
         Passenger "No, I never really had any reason to leave."
-        pov "That explains it then. Most people who never leave the city wouldn't know about it."
-        pov "You should head down below now and start setting up a bunk, though. There’s an empty wardrobe and a bunk bed, that's yours until we get to Viacaellum."
+        Pilot "That explains it then. Most people who never leave the city wouldn't know about it."
+        Pilot "You should head down below now and start setting up a bunk, though. There’s an empty wardrobe and a bunk bed, that's yours until we get to Viacaellum."
         "{i}She nods and makes her way down the ladder, clearly shaken, but glad to have a task. {\i}"
         "{i}You listen to her footsteps recede until the sound is overcome by the noise of the engines, before turning your focus back to the open road.{\i}"
     jump choice4_end
     label hostile_4:
         $ friendship -= 1;
-        pov "You didn't know? Really?"
+        Pilot "You didn't know? Really?"
         show pass qu sit i
-        pov "Is this your first time out of the city or something?"
+        Pilot "Is this your first time out of the city or something?"
         "{i}[Passenger] nods, looking uncomfortable.{\i}"
-        pov "Huh that's weird, I can't imagine staying in the same place my whole life."
+        Pilot "Huh that's weird, I can't imagine staying in the same place my whole life."
         "{i}She glares at you, clearly frustrated.{\i}"
-        pov "Anyways, there’s an open bunk down below for you. You should go set up."
+        Pilot "Anyways, there’s an open bunk down below for you. You should go set up."
         "{i}The passenger gets up and heads down below, clearly happy to get away from your conversation.{\i}"
         jump choice4_end
     label choice4_end:
@@ -300,20 +300,20 @@ label start:
             show pass qu sit t
             Passenger "{i}She shakes her head.{\i} If you think we'll be fine let's keep moving."
             show pass qu sit t
-            pov "Sounds good, but we’re gonna need to refuel if we’re gonna make it to Viacalleum."
+            Pilot "Sounds good, but we’re gonna need to refuel if we’re gonna make it to Viacalleum."
             jump Storm_Warning_end
         "No, we'll be fine.":
             hide screen countdown
             show pass qu sit s
-            pov "Nah, the forecasters always make the storms a bigger deal than they are."
+            Pilot "Nah, the forecasters always make the storms a bigger deal than they are."
             Passenger "Ok, if you're sure."
-            pov "We’ll be fine, but we’ll need to refuel if we’re gonna make it to Viacalleum."
+            Pilot "We’ll be fine, but we’ll need to refuel if we’re gonna make it to Viacalleum."
             jump Storm_Warning_end
     label menu_neutral_Storm_Warning:
         hide screen countdown
         show pass qu sit s
-        pov "Too late to turn back now."
-        pov "Also, we’ll need to refuel if we’re gonna make it to Viacalleum."
+        Pilot "Too late to turn back now."
+        Pilot "Also, we’ll need to refuel if we’re gonna make it to Viacalleum."
         jump choice7_end
     label Storm_Warning_end:
     scene ext_rfstation
@@ -410,11 +410,11 @@ label start:
         if nationalist_points <= anti_points:
             jump anti_history_conversation
     label nationalist_history_conversation:
-        pov "No, I think it’ll be different."
+        Pilot "No, I think it’ll be different."
         "TBD CONVERSATION ABOUT WHAT REFUELING ATTENDANT SAID"
         jump choice6_end
     label anti_history_conversation:
-        pov "Yeah, I don’t see a point in repeating history that's been proven not to work."
+        Pilot "Yeah, I don’t see a point in repeating history that's been proven not to work."
         "TBD CONVERSATION ABOUT WHAT REFUELING ATTENDANT SAID"
         jump choice6_end
     label passenger_monologue:
@@ -463,8 +463,8 @@ label start:
     scene rd front
     show cp back
     show pass gr sit n
-    pov "I’m going to take a break up ahead. There’s an old vista that’s high enough I might be able to catch the storm radio to figure out what's going on with the weather."
-    pov "It’s a pretty good view. But if you want you should suit up to get a firsthand look, you should suit up."
+    Pilot "I’m going to take a break up ahead. There’s an old vista that’s high enough I might be able to catch the storm radio to figure out what's going on with the weather."
+    Pilot "It’s a pretty good view. But if you want you should suit up to get a firsthand look, you should suit up."
     show pass gr sit s
     Passenger "Why? Do you think the storm will cause trouble after all?"
     "{i}You are worried about the storm.{\i}"
@@ -487,7 +487,7 @@ label start:
             jump weatherLie_end
     label menu_neutral9:
         hide screen countdown
-        pov "It could be."
+        Pilot "It could be."
         show pass gr sit s
         jump weatherLie_end
     label weatherLie_end:
@@ -583,7 +583,7 @@ label start:
         Passenger "Really!? What new information are you going to learn from that thing?"
         Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacalleum. Please."
         "{i}You nod, and begin to head to the cockpit{\i}"
-        pov "Just brace yourself though. This is going to be a...bumpy ride."
+        Pilot "Just brace yourself though. This is going to be a...bumpy ride."
         jump checkRadio_end
     label checkRadio_end:
         "{i}You manage to cross nearly half the remaining distance to Viacelleum before the storm hits.{\i}"
