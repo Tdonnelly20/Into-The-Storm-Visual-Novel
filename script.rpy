@@ -265,20 +265,20 @@ label start:
             show pass qu sit t
             Passenger "{i}She shakes her head.{\i} If you think we'll be fine let's keep moving."
             show pass qu sit t
-            pov "Sounds good, but we’re gonna need to refuel if we’re gonna make it to Viacalleum."
+            pov "Sounds good, but we’re gonna need to refuel if we’re gonna make it to Viacaellum."
             jump Storm_Warning_end
         "No, we'll be fine.":
             hide screen countdown
             show pass qu sit s
             pov "Nah, the forecastors always make the storms a bigger deal than they are."
             Passenger "Ok, if you're sure."
-            pov "We’ll be fine, but we’ll need to refuel if we’re gonna make it to Viacalleum."
+            pov "We’ll be fine, but we’ll need to refuel if we’re gonna make it to Viacaellum."
             jump Storm_Warning_end
     label menu_neutral_Storm_Warning:
         hide screen countdown
         show pass qu sit s
         pov "Too late to turn back now."
-        pov "Also, we’ll need to refuel if we’re gonna make it to Viacalleum."
+        pov "Also, we’ll need to refuel if we’re gonna make it to Viacaellum."
         jump choice7_end
     label Storm_Warning_end:
     scene ext_rfstation
@@ -433,7 +433,7 @@ label start:
     show pass gr sit s
     Passenger "Why? Do you think the storm will cause trouble after all?"
     "{i}You are worried about the storm.{\i}"
-    "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of our journey, you don’t know if you’ll be able to beat it to Viacelleum like you thought you would."
+    "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of our journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would."
     label weatherLie:
         $ timer_jump = 'menu_neutral9'
     show screen countdown
@@ -546,12 +546,12 @@ label start:
         Passenger "Could you not, please? I’ve had enough of that damn thing for the rest of my life."
         "{i}You open your mouth to explain that it might offer some information on the duration of the storm and how we might avoid it, but she seems to read my thoughts.{\i}"
         Passenger "Really!? What new information are you going to learn from that thing?"
-        Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacalleum. Please."
+        Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacaellum. Please."
         "{i}You nod, and begin to head to the cockpit{\i}"
         pov "Just brace yourself though. This is going to be a...bumpy ride."
         jump checkRadio_end
     label checkRadio_end:
-        "{i}You manage to cross nearly half the remaining distance to Viacelleum before the storm hits.{\i}"
+        "{i}You manage to cross nearly half the remaining distance to Viacaellum before the storm hits.{\i}"
         "{i}But when it hits, it hits hard.{\i}"
         "{i}Hailstones the size of your hand slam against the craft, scratching paint and causing the entire chassis to shake, pushing the craft further and further to one side of the road.{\i}"
         "{i}Then, without warning, a rock nearly the size of your head comes flying out of nowhere. It crashes into the right side thruster, gouging the windshield with paneling and bits of metal dispersed by the collision.{\i}"
@@ -585,7 +585,7 @@ label start:
         "You return to Domatellium to support the new government."
     if anti_points >2:
         if friendship > 3:
-            "You stay in Viacelleum with Passenger"
+            "You stay in Viacaellum with Passenger"
         else:
             "You return to Domatellium to help others leave."
     else:
