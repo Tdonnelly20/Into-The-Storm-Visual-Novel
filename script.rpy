@@ -692,13 +692,13 @@ label start:
         Passenger "Well, I think they’re weird. Everyone is obsessed with putting this nice image over the real points. A real movement wouldn’t feel the need to manipulate people into siding with them."
         menu:
             "I don't think that's what they’re trying to do.":
-                $ nationalism_points += 1
+                $ nationalist_points += 1
                 Pilot "I don’t think that’s true. I’m sure there are a couple who are like that, but it really just seems like a group passionate about change for the better."
                 Passenger "What do you even know? You think you can make a judgment on it based on a couple radio broadcasts?"
                 hide pass with fade
                 "{i}[Vesta] climbs inside the ship before you can respond, her jaw set with frustration.{\i}"
             "You're right":
-                $ nationalism_points -= 1
+                $ nationalist_points -= 1
                 Pilot "I suppose you’re right."
                 Passenger "And on top of it all, everyone acts so weird if you try to question the Neighbor’s message. I can’t even tell if they really all believe it, or if people are just too scared of being the odd one out to disagree."
                 Passenger "I remember how weird everyone acted when I started looking into what people were saying back when…"
