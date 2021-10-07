@@ -1,11 +1,5 @@
 label start:
 
-    label point_system:
-        $ nationalist_points = 0
-        $ attendant = 0
-        $ friendship = 0
-        $ nameKnown =False
-        $ helped = 0
 
     init python:
         renpy.music.set_volume(0, 0, channel="background_music")
@@ -13,19 +7,34 @@ label start:
     init python:
         renpy.music.set_volume(0, 0, channel="title")
         renpy.music.register_channel("title", "music", True)
-    define Nationalist=Character("Radio")
-    define Radio=Character("Radio")
-    $ nameVesta = 'Passenger'
-    $ nameVestaU = 'The passenger'
-    $ nameVestaL = 'the passenger'
-    define Passenger=DynamicCharacter("nameVesta")
-    define Vesta=DynamicCharacter("nameVestaU")
-    define vesta=DynamicCharacter("nameVestaL")
+    init python:
+        renpy.music.set_volume(0, 0, channel="bg_noise")
+        renpy.music.register_channel("bg_noise", "music", True)
     scene main_menu
     python:
         protagName = renpy.input("What is your name?", length=32)
         protagName = protagName.strip()
-    define Pilot= Character("[protagName]")
+
+    label Variables:
+        $ nationalist_points = 0
+        $ attendant = 0
+        $ friendship = 0
+        $ nameKnown =False
+        $ helped = 0
+        $ nameVesta = 'Passenger'
+        $ nameVestaU = 'The passenger'
+        $ nameVestaL = 'the passenger'
+        $ nameNellU ='The attendant'
+        $ nameNellL='the attendant'
+
+    label defineCharacters:
+        define Pilot= Character("[protagName]")
+        define Radio=Character("Radio")
+        define Passenger=DynamicCharacter("nameVesta")
+        define Vesta=DynamicCharacter("nameVestaU")
+        define vesta=DynamicCharacter("nameVestaL")
+        define Nell = DynamicCharacter("nameNellU")
+        define nell = DynamicCharacter("nameNellL")
 
     """This game relies heavily on all the choices you make and don't make.
 
@@ -63,6 +72,7 @@ label start:
         $ timer_jump = 0
     init python:
         renpy.music.register_channel("Radio", "sfx", True)
+    play bg_noise 'audio/amb-sfx_train-station.mp3'
     play Radio 'audio/mus_Radio-static.mp3'
     play background_music "audio/mus_ambient.ogg" fadein 3.0
     Radio """
@@ -100,9 +110,9 @@ label start:
 
             menu:
                 "This is bullshit.":
-                    $ nationalist_points -=1
+                    $ nationalist_points -= 1
                 "This is pretty interesting":
-                    $ nationalist_points +=1
+                    $ nationalist_points += 1
             Radio """
             I call on you, my friends, my fellow citizens of Domatellium, to take action, for tomorrow is the day we claim this city!
 
@@ -118,22 +128,22 @@ label start:
             hide screen countdown
             "{i}You turn the radio off.{/i}"
             jump choice1_end
-
     label menu_neutral:#If the Player doesn't make a choice
         hide screen countdown
         stop Radio
-
         "You know, in times like these, if you’re always this indecisive, you’ll probably end up regretting it later."
     label choice1_end:
         show pass coat i behind cp
     Passenger "Taxi!"
     Passenger "Can you take me to Viacaellum?"
+
     label choice2:
         $ timer_jump = 'menu_neutral2'
     show screen countdown
     menu:
         "Really? Wouldn't a transport be faster?":
             hide screen countdown
+            $friendship -= 1
             Pilot "Really? Wouldn't a transport be faster?"
             Passenger "Please, can you just take me?"
             Pilot "Fine. Do you have any bags?"
@@ -152,7 +162,7 @@ label start:
         "{i}She looks down and shakes her head.{/i}"
         show pass coat
         Pilot "Alright, hop in."
-
+    stop bg_noise
     hide pass
     hide cp
     with dissolve
@@ -238,16 +248,17 @@ label start:
         play Radio 'audio/mus_Radio-static.mp3'
         play title "audio/mus_title.ogg" fadein 1.0
         "{i}You turn on the radio to listen to some music.{/i}"
-        "{i}The radio begins to play music and [vesta] seems to relax somewhat as you reach the city walls.{/i}"
         play sound 'audio/sfx_space-engine.mp3'
-        show leaving_doma_still with Dissolve(2.0)
+        "{i}The radio begins to play music and [vesta] seems to relax somewhat as you reach the city walls.{/i}"
         stop background_music fadeout 5.0
+
         "{i}Passing through the massive gate, you accelerate quickly, the city walls beginning to recede quickly in the background.{/i}"
         stop Radio
-        hide leaving_doma_still with fade
+        hide black with fade
         stop title
         play background_music "audio/mus_ambient.ogg" fadein 3.0
         show pass qu sit i
+        stop sound fadeout 1.0
         "{i}The radio shuts off abruptly, startling [vesta].{/i}"
         Passenger "Why did the radio just shut off?"
 
@@ -318,7 +329,6 @@ label start:
 
     ###Act 2
 
-    #show pass qu sit n at right and bottomRight
     transform sitAtTable:
         xpos .4
         ypos .1
@@ -326,8 +336,9 @@ label start:
         xzoom -1.0
 
 
+    "{i}[Vesta] looks to you nervously, picking absentmindedly at the seat of her chair. The radio comes back on, startling her.{/i}"
     play Radio 'audio/mus_Radio-static.mp3'
-    "{i}[Vesta] looks to you nervously, picking absentmindedly at the seat of her chair.{/i}"
+    play sound 'audio/sfx_weather_jingle.mp3'
     Radio "Attention all pilots, forecasters are warning everyone to take shelter in a dome or station for the time being."
     show pass qu sit s at sitAtTable behind table2t
     Radio "Storm Mutatio is predicted to hit within the week and will be one of the worst storms Duoterra will encounter this year."
@@ -339,7 +350,7 @@ label start:
     menu:
         "Do you want to turn back?":
             hide screen countdown
-            $ friendship +=1
+            $ friendship += 1
             Pilot "I think we'll be fine, but do you want to turn back?"
             if friendship >= 0:
                 "{i}She shakes her head.{/i}"
@@ -361,7 +372,7 @@ label start:
             jump Storm_Warning_end
         "Too late to turn back now.":
             hide screen countdown
-            $ friendship -=1
+            $ friendship -= 1
             Pilot "We’ll be fine, besides it’s too late to turn back now."
             show pass qu sit i at sitAtTable behind table2t
             "{i}[Vesta] narrows her eyes at this, clearly unsettled by your statement.{/i}"
@@ -377,10 +388,8 @@ label start:
         Pilot "It’ll take an hour or so, but there’s a counter there if you’d like to grab a bite."
         jump Storm_Warning_end
     label Storm_Warning_end:
-    play sound 'audio/sfx_space-engine.mp3'
     scene ext_rfstation
-    $ nameNellU ='The attendant'
-    $ nameNellL='the attendant'
+    play bg_noise 'audio/amb-sfx_train-station.mp3'
     "{i}You pilot the ship through the gates of the refueling station’s small dome, bringing it to a stop next to the refueling apparatus.{/i}"
     transform atDoor:
         zoom .35
@@ -409,11 +418,11 @@ label start:
     label enter:
         hide pass with fade
     stop background_music fadeout 2.0
+
     play background_music 'audio/mus_gas-station.ogg' fadein 3.0
     "{i}A second later you enter the station, greeted by the familiar crackle of the radio.{/i}"
+    play sound 'audio/sfx_jingle.mp3'
     scene int_rfstation c
-
-    #SFX: Door jingle
     transform lower:
         xpos 0.2
         ypos 0.3
@@ -425,7 +434,7 @@ label start:
     show pass std n at bottomRight
     show ext_rfstation
     hide ext_rfstation with fade
-    #play sound 'audio/sfx_jingle.mp3'
+
     pause 0.5
     play Radio 'audio/mus_Radio-static.mp3'
     Radio "...as the election of Domatellium’s new governor draws near, gatherings in support of the formers mayor’s campaign for the position have popped up across Domatellium!"
@@ -442,8 +451,6 @@ label start:
         "{i}Talk to refuel station attendant.{/i}":
             hide screen countdown
             $ attendant += 1
-            define Nell = DynamicCharacter("nameNellU")
-            define nell = DynamicCharacter("nameNellL")
             jump conversation_with_attendant
     label menu_neutral5:
         hide screen countdown
@@ -462,8 +469,6 @@ label start:
         jump Fell_Apart
     label Hear_About_Gatherings:
         "{i}You give [nell] who stands behind the counter a wave as you enter, silently taking a seat and focusing on the radio.{/i}"
-
-
         hide pass
         hide rs
         with dissolve
@@ -593,14 +598,18 @@ label start:
             "{i}You get to your feet, waving goodbye to Nell as you exit. Nell simply looks away, shaking her head.{/i}"
             jump choice5_end
     label choice5_end:
-        scene rf_station_still
+        scene ext_rfstation
         show pass std n at bottomRight
         show int_rfstation c
         hide int_rfstation c with Dissolve(1.0)
         pause 0.7
         stop music fadeout 1.0
         "{i}You follow [vesta] as she walks hurriedly to the ship, and have to jog a few steps to catch up to her.{/i}"
-        play background_music "audio/mus_ambient.ogg" fadein 3.0
+        #Max nationalist_points is 3
+        if nationalist_points > 1:
+            play background_music "audio/mus_ambient-bad.ogg" fadein 3.0
+        else:
+            play background_music "audio/mus_ambient.ogg" fadein 3.0
     label choice6:
         $ timer_jump = 'menu_neutral6'
     show screen countdown
@@ -707,14 +716,12 @@ label start:
                 "{i}[Vesta] climbs into your ship before you can ask what she meant, clearly done with the conversation.{/i}"
         jump choice6_end
     label choice6_end:
-
-
-            scene rd storm
+            scene rd front
             show cp front
-            show rf_station_still
-            hide rf_station_still with Dissolve(1.0)
+            show ext_rfstation
+            hide ext_rfstation with Dissolve(1.0)
             pause .5
-
+    stop bg_noise
     "{i}As you climb into the pilot’s seat, you can’t stop thinking about what you heard earlier.{/i}"
 
     "{i}You drive into the night, but eventually you decide to turn in.{/i}"
@@ -728,14 +735,13 @@ label start:
         ypos .1
         xzoom -1
     hide cp front with Dissolve(1.0)
-    show kn table with Dissolve(1.0)
+    show kn table2 with Dissolve(1.0)
     "{i}As you’re walking to the bunks, you hear muffled sobbing.{/i}"
-    show kn thru_door with Dissolve(1.0)
+    show kn thru_door
     show pass qu sit a at thru_door
+    with Dissolve(1.0)
     pause .5
     "{i}You poke your head in the doorway of the sitting room and see [vesta]. She’s curled up in one of the chairs with her head in her hands, apparently not having noticed you yet.{/i}"
-    #"{i}{/i}"
-
     label choice7:
         $ timer_jump = 'menu_neutral7'
         show screen countdown
@@ -780,6 +786,7 @@ label start:
         label menu_convo1:
             menu:
                 "We all make stupid decisions.":
+                    $ friendship -= 1
                     hide screen countdown
                     Pilot "We all make mistakes sometimes. When we get to Viacaellum, I’m sure you’d be able to find someone who’ll drive you back once the storm has passed."
                     show pass qu sit a
@@ -795,7 +802,7 @@ label start:
                         menu:
                             "{i}Draw back and wait.{/i}":
                                 hide screen countdown
-                                $ friendship -=1
+                                $ friendship -= 1
                                 "{i}You sit back, trying to give her space, but her body just seems to get tighter and tighter, her sobs ever weaker and more desperate.{/i}"
                                 "{i}After what feels like an eternity, her voice, tiny and thin, makes its way out from between her clenched teeth.{/i}"
                                 Passenger "I need you to leave."
@@ -806,6 +813,7 @@ label start:
                                 "{i}Closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
                                 jump choice7_end
                             "{i}Reach out to her.{/i}":
+                                $ friendship += 1
                                 hide screen countdown
                                 "{i}You reach out to her, placing your hand in hers.{/i}"
                                 "{i} Letting out another small noise, she grips your hand so tight her knuckles go white, holding on as if for dear life.{/i}"
@@ -826,8 +834,9 @@ label start:
                             "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at the passenger, wishing you knew how to help her.{/i}"
                             "{i}Closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
                             jump choice7_end
-                "I don’t think that leaving was stupid":
+                "I don’t think that leaving was stupid.":
                     hide screen countdown
+                    $ friendship += 2
                     Pilot "I don’t think leaving was stupid."
                     "{i}The passenger looks up at you, and she seems to tremble just a little less for a second.{/i}"
                     Pilot "Why...do you think it was stupid? "
@@ -961,19 +970,17 @@ label start:
         else:
             "{i}[Vesta] joins you in the cockpit the next morning, sitting sullenly with dark circles under her eyes.{/i}"
             "{i}She stares out the window absentmindedly, clearly uninterested in maintaining a conversation.{/i}"
-
-
         "{i}A few hours later, you break the heavy silence with some trepidation.{/i}"
         transform layingCP:
             ypos .87
             zoom .7
-        show pass gr sit n at layingCP with fade
+        show pass qu sit n at layingCP with fade
         Pilot "I’m going to take a break up ahead. There’s an old vista that’s high enough I might be able to catch the storm radio to figure out what's going on with the weather."
         Pilot "It’s a pretty good view, if you want to get a firsthand look you should suit up."
         show pass qu sit s
         Passenger "Why? Do you think the storm will cause trouble after all?"
         "{i}You are worried about the storm.{/i}"
-        "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of our journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would."
+        "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of our journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would.{/i}"
     label weatherLie:
         $ timer_jump = 'menu_neutral9'
     show screen countdown
@@ -985,12 +992,11 @@ label start:
             Passenger "If there’s nothing to worry about, why do you need to check the radio?"
             Pilot "I’m just being overly cautious, I guess."
             "{i}She doesn’t seem entirely convinced, but doesn’t question you further, though you notice her shoulders appear a little less tense.{/i}"
-            $ friendship +=1
+            $ friendship += 1
             jump weatherLie_end
         "Yes, probably":
             hide screen countdown
-            $ friendship -=1
-
+            $ friendship -= 1
             Pilot "Yeah, I’m worried it might hit us right before we reach Viacaellum."
             show pass qu sit i
             Passenger "What does that mean? We won’t have to stop, though, will we?"
@@ -1054,6 +1060,7 @@ label start:
         "{i}You keep tuning for the weather channel.{/i}"
         jump full_weather_Report
     label full_weather_Report:
+        play sound 'audio/sfx_weather_jingle.mp3'
         "{i}You continue to tune the radio, attempting to catch Viacaellum’s weather channel. It takes a few times, but you eventually get it.{/i}"
         Radio "--we haven’t seen a storm like this in years. In fact, this may be the largest storm we’ve been able to monitor in almost a century."
         "{i}The tone of the radio is entirely too jovial for the news it delivers.{/i}"
@@ -1064,7 +1071,7 @@ label start:
         Radio "Anyway, this message should be on repeat until we receive more news, so enjoy my illustrious voice in the meantime."
         "{i}The radio begins to repeat, looping through the same obnoxious message a few times before you shut it off.{/i}"
         "{i}Not long after you do, you hear the sound of the hatch in the sitting room being wrenched open, and a shivering passenger storms inside.{/i}"
-        $ friendship -=2
+        $ friendship -= 2
         jump radioChoice_end
     label radioChoice_end:
         jump choice8_end
@@ -1081,23 +1088,14 @@ label start:
     menu:
         "What's wrong?":
             hide screen countdown
+            Pilot "What's wrong?"
             if helped>0:
                 Passenger "I used to live in one of the neighborhoods they mentioned."
                 Passenger "Everyone I love is there. I tried to get them to come with me, but they wouldn't."
                 Passenger "I just keep thinking that if I didn't leave or if I stayed a bit longer-"
                 Pilot "You could've convinced them to come with you."
                 "{i}[Vesta] nods, looking down.{/i}"
-                menu:
-                    "I'm so sorry":
-                        Pilot "I'm so sorry, that's really hard."
-                        "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
-                    "You did the right thing":
-                        $ friendship +=1
-                        Pilot "You did the right thing. You tried to warn them and they didn't listen."
-                        Pilot "You shouldn't blame yourself."
-                        Pilot "They made their own choice."
-                        Passenger "I guess you're right, but it's still hard."
-                        "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
+                jump apologize
             elif friendship >1:
                 Passenger "Please leave me alone. I don't want to talk about it."
             else:
@@ -1115,41 +1113,43 @@ label start:
             jump choice8_end
         "Did you live in one of those neighborhoods?" if helped>0:
             hide screen countdown
+            Pilot "You lived in one of those neighborhoods, didn't you?"
             Passenger "Yeah, I grew up there."
             Passenger "Everyone I love is there. I tried to get them to come with me, but they wouldn't."
             Passenger "I just keep thinking that if I didn't leave or if I stayed a bit longer-"
             Pilot "You could've convinced them to come with you."
             "{i}[Vesta] nods, looking down.{/i}"
-            menu:
-                "I'm so sorry":
-                    Pilot "I'm so sorry, that's really hard."
-                    "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
-                "You did the right thing":
-                    $ friendship +=1
-                    Pilot "You did the right thing. You tried to warn them and they didn't listen."
-                    Pilot "You shouldn't blame yourself."
-                    Pilot "They made their own choice."
-                    Passenger "I guess you're right, but it's still hard."
-                    "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
-            jump choice8_end
+            jump apologize
+    label apologize:
+        menu:
+            "I'm so sorry.":
+                Pilot "I'm so sorry, that's really hard."
+                "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
+            "You did the right thing.":
+                $ friendship += 1
+                Pilot "You did the right thing. You tried to warn them and they didn't listen."
+                Pilot "You shouldn't blame yourself."
+                Pilot "They made their own choice."
+                Passenger "I guess you're right, but it's still hard."
+                "TBD TALK ABOUT NEIGHBORHOOD AND GO BACK INSIDE"
+        jump choice8_end
     label menu_neutral8:
         hide screen countdown
         jump choice8_end
     label choice8_end:
 
-    scene rd storm
+    scene rd front
     show kn thru_door
     show pass qu sit i at thru_door
     with fade
     Passenger "Can we just get going? I can’t handle this wasteland much longer."
-
     label checkRadio:
         $ timer_jump = 'menu_checkRadio'
     show screen countdown
     menu:
         "{i}Check radio first.{/i}":
             hide screen countdown
-            $ friendship -=1
+            $ friendship -= 1
             jump checking_Radio
         "{i}Agree and head to cockpit.{/i}":
             hide screen countdown
@@ -1187,19 +1187,20 @@ label start:
         Pilot "Just brace yourself though. This is going to be a...bumpy ride."
         jump checkRadio_end
     label checkRadio_end:
-        #play music 'audio/mus_tense-crashing.ogg'
+        play music 'audio/amb-sfx_strong-wind.mp3'
+        play sound 'audio/sfx_hail.mp3'
         hide pass
         hide kn
         with fade
         show cp front with fade
         "{i}You manage to cross nearly half the remaining distance to Viacelleum before the storm hits.{/i}"
+        play sound 'audio/sfx_crash.mp3'
+        pause .5
         "{i}But when it hits, it hits hard.{/i}"
-        scene crash_still with fade
-        pause 1
         scene black with fade
         stop background_music
-        pause 2.0
-        #play sound 'audio/sfx_ear_ringing'
+        pause 1.0
+        play sound 'audio/sfx_ear_ringing.mp3'
         pause .5
         show cp crashed with fade
         "{i}When you wake up, your head throbs. The ship groans as you get up and you nearly fall back down.{/i}"
@@ -1225,14 +1226,17 @@ label start:
         else:
             "TBD PASSENGER AGREES TO HELP FROM THE INSIDE."
             "TBD YOU BOTH FIX THE SHIP'S LEAK."
+    stop music fadeout 1.0
     "TBD AFTER THE STORM PASSES YOU'RE ABLE TO RADIO A TRANSPORT TO PICK YOU UP."
     "{i}You go out to where [vesta] is.{/i}"
-    scene viacaellum_still
+    scene rd front
     if friendship > 1:
         show pass std t
+
         Pilot "The transport will be here soon."
+
         Pilot "So, what will you do when you get to Viacaellum?"
-        if friendship > 3:
+        if friendship > 8:
             Passenger "Well, I was thinking that we could find out together."
             label menu_ending1:
                 menu:
