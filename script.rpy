@@ -1,4 +1,4 @@
-label start:
+﻿label start:
 
 
     init python:
@@ -73,7 +73,7 @@ label start:
     init python:
         renpy.music.register_channel("Radio", "sfx", True)
     play bg_noise 'audio/amb-sfx_train-station.mp3'
-    play Radio 'audio/mus_Radio-static.mp3'
+    play Radio 'audio/amb-sfx_radio-static.mp3'
     play background_music "audio/mus_ambient.ogg" fadein 3.0
     Radio """
     My friends, compatriots, and neighbors, do you feel it in the air? The buzz of excitement, the thrill of chance? The lust, no, love for justice that swirls through the streets?
@@ -111,7 +111,7 @@ label start:
             menu:
                 "This is bullshit.":
                     $ nationalist_points -= 1
-                "This is pretty interesting":
+                "This is pretty interesting.":
                     $ nationalist_points += 1
             Radio """
             I call on you, my friends, my fellow citizens of Domatellium, to take action, for tomorrow is the day we claim this city!
@@ -155,7 +155,7 @@ label start:
             jump choice2_end
     label menu_neutral2:#If the Player doesn't make a choice
         hide screen countdown
-        Pilot "Sure. Do you have any bags."
+        Pilot "Sure. Do you have any bags?"
         jump choice2_end
     label choice2_end:
         show pass coat r
@@ -216,8 +216,8 @@ label start:
             "It's my life's purpose":
                 Pilot "Yeah, I love being able to travel around the planet, getting a break from it all."
                 jump job_talk_end
-            "It's...alright.":
-                Pilot "Ah, you know, it’s alright I guess. It’s what I know how to do, so I don’t really get the luxury of a choice."
+            "It's alright, I guess.":
+                Pilot "Ah, you know, it’s alright, I guess. It’s what I know how to do, so I don’t really get the luxury of a choice."
                 jump job_talk_end
     label job_talk_end:
         "{i}She falls silent for a few minutes, watching buildings pass as you snake your way through Domatellium.{/i}"
@@ -232,8 +232,8 @@ label start:
         $friendship -= 1
         Pilot "Why are you heading all the way to Viacaellum without any luggage? It’s a pretty long trip for a spur-of-the-moment decision."
         show pass qu sit i
-        Passenger "What do you mean big trip? All the advertisements say it’s only a few hours!"
-        Pilot "Yeah, by transport. It’s nearly a week if I take you. What did you think, that I can get to sub orbit with this thing? Viacaellum is a quarter of the way across this planet!"
+        Passenger "What do you mean, a pretty long trip? All the advertisements say it’s only a few hours!"
+        Pilot "Yeah, by transport. It’s nearly a week if I take you. What, did you think I can get to sub-orbit with this thing? Viacaellum is a quarter of the way across this planet!"
         show pass qu s
         Passenger "Fine. I don't care how long it takes."
         "{i}[Vesta] crosses her arms and stares out the window, glaring at the buildings slowly inching past.{/i}"
@@ -245,7 +245,7 @@ label start:
     label choice3_end:
         show pass qu sit s
         stop background_music
-        play Radio 'audio/mus_Radio-static.mp3'
+        play Radio 'audio/amb-sfx_radio-static.mp3'
         play title "audio/mus_title.ogg" fadein 1.0
         "{i}You turn on the radio to listen to some music.{/i}"
         play sound 'audio/sfx_space-engine.mp3'
@@ -275,7 +275,7 @@ label start:
     label menu_neutral4:
         hide screen countdown
         show pass qu sit n
-        Passenger "Oh, it does that sometimes."
+        Passenger "Oh, it just does that sometimes."
         "{i}She shifts in her seat.{/i}"
         Pilot "There's an open bunk for you below the ship"
         hide pass qu sit s with fade
@@ -337,13 +337,13 @@ label start:
 
 
     "{i}[Vesta] looks to you nervously, picking absentmindedly at the seat of her chair. The radio comes back on, startling her.{/i}"
-    play Radio 'audio/mus_Radio-static.mp3'
+    play Radio 'audio/amb-sfx_radio-static.mp3'
     play sound 'audio/sfx_weather_jingle.mp3'
     Radio "Attention all pilots, forecasters are warning everyone to take shelter in a dome or station for the time being."
     show pass qu sit s at sitAtTable behind table2t
     Radio "Storm Mutatio is predicted to hit within the week and will be one of the worst storms Duoterra will encounter this year."
     stop Radio
-    Passenger "Do you think the storm will hit us before we reach Viacaellium?"
+    Passenger "Do you think the storm will hit us before we reach Viacaellum?"
     label Storm_Warning:
         $ timer_jump = 'menu_Storm_Warning'
     show screen countdown
@@ -356,7 +356,7 @@ label start:
                 "{i}She shakes her head.{/i}"
                 show pass qu sit t at sitAtTable behind table2t
                 Passenger "If you think we'll be fine let's keep going."
-                Pilot "Sounds good, but I will have to refuel if we’re gonna make it to Viacalleum."
+                Pilot "Sounds good, but I will have to refuel if we’re gonna make it to Viacaellum."
                 Pilot "It’ll take an hour or so, but there’s a counter there if you’d like to grab a bite."
             else:
                 show pass qu sit s at sitAtTable behind table2t
@@ -367,24 +367,24 @@ label start:
                 Passenger "Thank you, though."
                 show pass qu sit n at sitAtTable behind table2t
                 "{i}A few more minutes pass before you break the silence.{/i}"
-                Pilot "We’re going to have to stop soon to refuel to get all the way to Viacaellum."
+                Pilot "We’re going to have to stop soon to refuel and reach Viacaellum."
                 Pilot "It’ll take about an hour, but there’s a counter there if you’d like to grab a bite."
             jump Storm_Warning_end
         "Too late to turn back now.":
             hide screen countdown
             $ friendship -= 1
-            Pilot "We’ll be fine, besides it’s too late to turn back now."
+            Pilot "We’ll be fine. Besides, it’s too late to turn back now."
             show pass qu sit i at sitAtTable behind table2t
             "{i}[Vesta] narrows her eyes at this, clearly unsettled by your statement.{/i}"
-            Pilot "Also, I will have to refuel if we’re gonna make it to Viacalleum."
+            Pilot "Also, I will have to refuel if we’re gonna make it to Viacaellum."
             Pilot "It’ll take an hour or so, but there’s a counter there if you’d like to grab a bite."
             jump Storm_Warning_end
     label menu_neutral_Storm_Warning:
         hide screen countdown
         Pilot "Nah, the forecasters always make the storms a bigger deal than they are."
-        Passenger "Ok, if you're sure."
+        Passenger "Okay, if you're sure."
         show pass qu sit n at sitAtTable behind table2t
-        Pilot "We’ll be fine, but I will need to refuel if we’re gonna make it to Viacalleum."
+        Pilot "We’ll be fine, but I will need to refuel if we’re gonna make it to Viacaellum."
         Pilot "It’ll take an hour or so, but there’s a counter there if you’d like to grab a bite."
         jump Storm_Warning_end
     label Storm_Warning_end:
@@ -413,7 +413,7 @@ label start:
             jump wave_neutral
     label wave_neutral:
         hide screen countdown
-        "{i}You look away, and see out of the corner of your eye her shoulders sag slightly. Nevertheless, she squares them again, pushing on the door, crossing the threshold and giving you a glimpse of the empty counter.{/i}"
+        "{i}You look away, and notice out of the corner of your eye her shoulders sag slightly. Nevertheless, she squares them again, pushing on the door, crossing the threshold and giving you a glimpse of the empty counter.{/i}"
         jump enter
     label enter:
         hide pass with fade
@@ -436,9 +436,9 @@ label start:
     hide ext_rfstation with fade
 
     pause 0.5
-    play Radio 'audio/mus_Radio-static.mp3'
-    Radio "...as the election of Domatellium’s new governor draws near, gatherings in support of the formers mayor’s campaign for the position have popped up across Domatellium!"
-    Radio "While this campaign has been somewhat polarizing of the past several weeks, it appears that the mayor’s supporters, or “neighbors,” as they call themselves, are attempting to change that view with citywide celebrations."
+    play Radio 'audio/amb-sfx_radio-static.mp3'
+    Radio "...as the election of Domatellium’s new governor draws near, gatherings in support of the former mayor’s campaign for the position have popped up across Domatellium!"
+    Radio "While this campaign has been somewhat polarizing over the past several weeks, it appears that the mayor’s supporters, or “neighbors,” as they call themselves, are attempting to change that view with citywide celebrations."
     Radio "We go live to one of our reporters on the scene…"
     stop Radio
     label choice5:
@@ -479,7 +479,7 @@ label start:
         Radio "Let’s see if we can ask one of these fine folks some questions."
         Radio "Sir, why have you come out to the gatherings?"
         "{i}There’s some slight fumbling with the microphone right before the interviewee speaks.{/i}"
-        Radio "Well, I gotta say that Domatellium--hell all of Duoterra--is not what it used to be anymore. My Grandfather told me stories about how it used to be and it’s a real shame how far we’ve fallen."
+        Radio "Well, I gotta say that Domatellium--hell, all of Duoterra--ain’t what it used to be anymore. My grandpa told me stories about how it used to be and it’s a real shame how far we’ve fallen."
         "{i}The words become garbled for a moment as the interviewee gets too far from the microphone.{/i}"
         Radio "--but we--Domatellium, that is--used to have aspirations! We used to want progress! And y’know, that’s really all I’m looking for!"
         "{i}The reporter attempts to butt in, but the neighbor quickly speaks over them.{/i}"
@@ -526,12 +526,12 @@ label start:
             show pass std t at bottomRight
             Nell "What do you think I mean?"
             show rs clerk t at lower
-            Nell "Terraforming halted nearly a century ago. Have you not looked outside? The roads between our cities are a half day of radiation away from crumbling to dust."
+            Nell "Terraforming halted nearly a century ago. Haven’t you looked outside? The roads between our cities are a half day of radiation away from crumbling to dust."
             Nell "I’ve watched the walls of Domatellium get more cratered every year, and I haven’t seen someone try to repair them since I was a {i}child.{/i}"
             Nell """
             My grandmother was one of the head engineers on Domatellium’s terraforming equipment back when it was still functioning, and even then it was failing.
 
-            They’d been feeding those machines sub par material for so long that they were beyond salvation.
+            They’d been feeding those machines sub-par material for so long that they were beyond salvation.
 
             And so people got scared. They got tired of the decline and looked for change, but found it by trying to recreate the past, instead of actually looking toward the future.
 
@@ -544,7 +544,7 @@ label start:
             My grandma got fired then, so I don’t know what happened. She knew it was fruitless, and I guess now I’m in the same position.
             """
             "{i}Nell laughs at herself, picking up another glass and going back to drying.{/i}"
-            Nell "'Cept here I am, drying glasses in a run-down refueling station."
+            Nell "’Cept here I am, drying glasses in a run-down refueling station."
             show rs clerk n at lower
             "{i}You look over at [vesta], who’s staring at Nell with a look you can’t quite place.{/i}"
             show pass std n at bottomRight
@@ -575,9 +575,9 @@ label start:
         label hopeful_on_nationalism:
             Pilot "Isn’t it possible that this could head in a good direction? The speeches I’ve heard on the radio seem like they’ve got some good points. I even heard them talk about starting terraforming again."
             Nell "What are you even talking about?"
-            Pilot "I’m just saying that they’re at least trying to find solutions."
+            Pilot "I’m just saying that they’re at least {i}trying{/i} to find solutions."
             Nell """
-            Solutions?! They’re just trying to force a fix on something that’s totally broken! This new movement is just repeating the same points that sent Duoterra on the decline a century ago.
+            {i}Solutions?!{/i} They’re just trying to force a fix on something that’s totally broken! This new movement is just repeating the same points that sent Duoterra on the decline a century ago.
 
             Ever wonder why the roads between our cities are a half day of radiation away from crumbling to dust?
 
@@ -604,7 +604,7 @@ label start:
         hide int_rfstation c with Dissolve(1.0)
         pause 0.7
         stop music fadeout 1.0
-        "{i}You follow [vesta] as she walks hurriedly to the ship, and have to jog a few steps to catch up to her.{/i}"
+        "{i}You follow [vesta] as she walks hurriedly to the ship, needing to jog a few steps to catch up to her.{/i}"
         #Max nationalist_points is 3
         if nationalist_points > 1:
             play background_music "audio/mus_ambient-bad.ogg" fadein 3.0
@@ -639,12 +639,12 @@ label start:
         if nationalist_points <= 0:
             jump anti_history_conversation
     label nationalist_history_conversation:
-        Pilot "No, I think it’ll be different this time, y’know? We’ve learned since then, and so we have to have a better chance of terraforming Duoterra than we did before."
+        Pilot "No, I think it’ll be different this time, y’know? We’ve learned since then, so we have to have a better chance of terraforming Duoterra than we did before."
         Passenger "That’s what everyone says, but I’m not sure if I believe it anymore."
         Passenger "What about what Nell said about the last time we tried to terraform Duoterra..."
         Passenger "It seems like it just made everything worse."
         Pilot "Well, we need to try something! It’s not like the alternative is going to try and make things better."
-        Pilot "It seems like the current Governor is too busy sending window washers to polish the inside of Domatellium’s walls to try and repair the exterior!"
+        Pilot "It seems like the current Governor is too busy sending window washers to polish the inside of Domatellium’s walls to try and fix the outside!"
         "{i}Your conversation falls into an awkward silence.{/i}"
         hide pass with fade
         "{i}When you get to the ship, [vesta] heads down to the bunks without saying anything.{/i}"
@@ -666,14 +666,14 @@ label start:
         "{i}When you reach the entrance of the ship, you open your mouth, unsure of what to say, but [vesta] climbs inside before you can say anything.{/i}"
         jump choice6_end
     label dont_want_to_talk_about_it:
-        Pilot "Why do you wanna leave so bad?"
+        Pilot "Why do you want to leave so badly?"
         Passenger "Sorry, [protagName]. I just really don’t want to talk about it."
         Pilot "Alright, we don’t have to talk about it then."
         "{i}The two of you walk silently back to the ship.{/i}"
         hide pass with fade
         jump choice6_end
     label dont_need_to_tell_you:
-        Pilot "Why do you wanna leave so bad?"
+        Pilot "Why do you want to leave so badly?"
         Passenger "I don't need to tell you!"
         "{i}[vesta] looks angry and a little frightened, clearly unable to talk to you at the moment.{/i}"
         Pilot "Alright, alright."
@@ -682,7 +682,7 @@ label start:
         "{i}When you reach it, [vesta] stomps below deck without another word to you.{/i}"
         jump choice6_end
     label conversation_about_leaving_station:
-        Pilot "Why do you wanna leave so bad?"
+        Pilot "Why do you want to leave so badly?"
         Passenger "I’m just worried about the storm."
         Passenger "I want to put as much distance between Domatellium and myself as possible."
         Pilot "Can I ask why you left Domatellium in the first place?"
@@ -788,7 +788,7 @@ label start:
                 "We all make stupid decisions.":
                     $ friendship -= 1
                     hide screen countdown
-                    Pilot "We all make mistakes sometimes. When we get to Viacaellum, I’m sure you’d be able to find someone who’ll drive you back once the storm has passed."
+                    Pilot "We all make mistakes sometimes. When we get to Viacaellum, I’m sure you’ll be able to find someone who’ll drive you back once the storm has passed."
                     show pass qu sit a
                     Passenger "That’s not, that’s not what I meant!"
                     "{i}She clenches her fists, her whole body tensing with another sob.{/i}"
@@ -839,7 +839,7 @@ label start:
                     $ friendship += 2
                     Pilot "I don’t think leaving was stupid."
                     "{i}The passenger looks up at you, and she seems to tremble just a little less for a second.{/i}"
-                    Pilot "Why...do you think it was stupid? "
+                    Pilot "Why... Do you think it was stupid? "
                     "{i}She looks away again, her face contorted into one of anguish.{/i}"
                     Passenger " I...I’ve made mistakes. So, so, so many."
                     "{i}She takes a moment to let the tears in her eyes subside.{/i}"
@@ -927,11 +927,11 @@ label start:
         Passenger "I’m sorry I didn’t think this through, I’m sorry I inconvenienced you by paying you to drive me somewhere!"
         #Passenger "I’m {i}sorry{/i} I didn’t think this through, I’m {i}sorry{/i} I inconvenienced you by {i}paying you{/i} to drive me somewhere!"
 
-        Passenger "And then you come in here as if you’re just going to make it better? I’ve been trapped in this god awful--"
+        Passenger "And then you come in here as if you’re just going to make it better? I’ve been trapped in this god-awful--"
 
         Passenger "I mean, what even is this thing? Some glorified taxi running on some kind of ancient jet fuel?"
 
-        Passenger "But I’ve been trapped here, with you, regretting every choice I’ve made in my life and trying to keep from losing my mind and your choice, of all the choices you could make, is to try and make this an even greater hell?"
+        Passenger "But I’ve been trapped here, with you, regretting every choice I’ve made in my life and trying to keep from losing my mind and your choice, of all the choices you could make, is to try and make this an even {i}greater{/i} hell?"
 
         "{i}She storms towards you, and you take a reflexive step back, removing your hand from the door handle.{/i}"
         show black
@@ -979,8 +979,8 @@ label start:
         Pilot "It’s a pretty good view, if you want to get a firsthand look you should suit up."
         show pass qu sit s
         Passenger "Why? Do you think the storm will cause trouble after all?"
-        "{i}You are worried about the storm.{/i}"
-        "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of our journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would.{/i}"
+        "{i}You’re worried about the storm.{/i}"
+        "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of the journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would.{/i}"
     label weatherLie:
         $ timer_jump = 'menu_neutral9'
     show screen countdown
@@ -1029,7 +1029,7 @@ label start:
             Radio "According to a direct wire we received only minutes ago, it appears that following a call for a recount by the former Governor of the region, riots have broken out--"
             Passenger "What?!"
             "{i}The reporter starts listing off neighborhoods where the riots have concentrated, and [vesta] listens with bated breath. At one name, a small gasp escapes her lips.{/i}"
-            "{i}[Passenger] seems quite shaken by the news, hastily throwing her coat on and her helmet on over her head before rushing outside.{/i}"
+            "{i}[Passenger] seems quite shaken by the news, hastily throwing on her coat and her helmet over her head before rushing outside.{/i}"
             "{i}You move your hand to change the channel, but she interrupts you.{/i}"
             Passenger "No, don't!"
             Passenger "I’m sorry, I need to hear this."
@@ -1049,7 +1049,7 @@ label start:
         $ timer_jump = 'menu_radioChoice'
     show screen countdown
     menu:
-        "Check on [Passenger].":
+        "{i}Check on [Passenger].{/i}":
             hide screen countdown
             jump choice8
         "{i}Keep tuning for the weather channel.{/i}":
@@ -1065,9 +1065,9 @@ label start:
         Radio "--we haven’t seen a storm like this in years. In fact, this may be the largest storm we’ve been able to monitor in almost a century."
         "{i}The tone of the radio is entirely too jovial for the news it delivers.{/i}"
         Radio "Truly a once in a lifetime experience, but not one I’d recommend checkin’ out if you don’t have the proper equipment."
-        Radio "The governor recently put out a citywide mandate to stay inside, halting all exiting travel until this truly historic storm has passed through."
+        Radio "The governor recently put out a citywide mandate to stay inside, halting all outbound travel until this truly historic storm has passed through."
         Radio "And for those of you too unlucky to be outside city walls when this things hits…"
-        Radio "Well let’s just say if you ain’t a storm chaser, I do not envy you."
+        Radio "Well, let’s just say if you ain’t a storm chaser, I don’t envy you."
         Radio "Anyway, this message should be on repeat until we receive more news, so enjoy my illustrious voice in the meantime."
         "{i}The radio begins to repeat, looping through the same obnoxious message a few times before you shut it off.{/i}"
         "{i}Not long after you do, you hear the sound of the hatch in the sitting room being wrenched open, and a shivering passenger storms inside.{/i}"
@@ -1182,7 +1182,7 @@ label start:
         Passenger "Could you not, please? I’ve had enough of that damn thing for the rest of my life."
         "{i}You open your mouth to explain that it might offer some information on the duration of the storm and how we might avoid it, but she seems to read my thoughts.{/i}"
         Passenger "Really!? What new information are you going to learn from that thing?"
-        Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacalleum. Please."
+        Passenger "That storm is headed right towards us, and stretches for as far as I can see. I can’t wait here any longer. Just get me to Viacaellum. Please."
         "{i}You nod, and begin to head to the cockpit.{/i}"
         Pilot "Just brace yourself though. This is going to be a...bumpy ride."
         jump checkRadio_end
@@ -1193,7 +1193,7 @@ label start:
         hide kn
         with fade
         show cp front with fade
-        "{i}You manage to cross nearly half the remaining distance to Viacelleum before the storm hits.{/i}"
+        "{i}You manage to cross nearly half the remaining distance to Viacaellum before the storm hits.{/i}"
         play sound 'audio/sfx_crash.mp3'
         pause .5
         "{i}But when it hits, it hits hard.{/i}"
@@ -1293,6 +1293,9 @@ label start:
     pause 3
     hide text with Dissolve(2.0)
     show text "Mr.Lucky By Karl Jenkins{p}{p}Tibeauthetraveler By Ember (ft.eleven}"  at truecenter with fade
+    pause 3
+    hide text with Dissolve(2.0)
+    show text "Down to Business (Title/Situational){p}{p}A Bright Future (Good Ending){p}{p}A \"Blight\" Future (Bad Ending){p}{p}by Benny Klaiman"  at truecenter with fade
     pause 3
     hide text with Dissolve(5.0)
     return
