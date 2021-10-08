@@ -1283,13 +1283,13 @@
     show text "Programming by Tate Donnelly{p}{p}Art by Nathan Booth{p}{p}Original Music and Proofreading by Benny Klaiman{p}{p}Writing by Tate Donnelly and Nathan Booth" at truecenter with fade
     pause 10
     hide text with Dissolve(2.0)
-    show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Strong Howling Wind Sound 2 Hours, Swaying Spruce Trees in The Wind By Relaxing Sounds of Nature{p}{p}Heavy Rain Sounds at Night - Sleep, Study, Relax | Ambient Noise Rainstorm, @Ultizzz day#69 By Ultimate Ambient Noise Soundzzz" at truecenter with fade
+    show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Strong Howling Wind Sound 2 Hours, Swaying Spruce Trees in The Wind By Relaxing Sounds of Nature{p}{p}Heavy Rain Sounds at Night - Sleep, Study, Relax | Ambient Noise Rainstorm, @Ultizzz day#69 by Ultimate Ambient Noise Soundzzz" at truecenter with fade
     pause 3
     hide text with Dissolve(2.0)
-    show text "10 hours of hard rain on a metal roof (Rain Sleep Sounds) Rain Sounds for Sleeping. Rainfall.lluvia By SleepDroid Studios Sleep Sounds{p}{p}Radio Static - Sound Effect By Audio Library - Free Sound Effects"  at truecenter with fade
+    show text "10 hours of hard rain on a metal roof (Rain Sleep Sounds) Rain Sounds for Sleeping. Rainfall.lluvia by SleepDroid Studios Sleep Sounds{p}{p}Radio Static - Sound Effect By Audio Library - Free Sound Effects"  at truecenter with fade
     pause 3
     hide text with Dissolve(2.0)
-    show text "Ear Ringing Sound Effect - Free Download HD By SFX and GFX{p}{p}Heavy Hail Sound Effects By Free To Use Sounds{p}{p}8 hours of train station sounds | train station sound effect and railway station sound / 8 Hours Of{p}{p}Plane Crash Sound Effect By Sound Effect Database"  at truecenter with fade
+    show text "Ear Ringing Sound Effect - Free Download HD By SFX and GFX{p}{p}Heavy Hail Sound Effects By Free To Use Sounds{p}{p}8 hours of train station sounds | train station sound effect and railway station sound / 8 Hours Of{p}{p}Plane Crash Sound Effect by Sound Effect Database"  at truecenter with fade
     pause 3
     hide text with Dissolve(2.0)
     show text "Mr.Lucky By Karl Jenkins{p}{p}Tibeauthetraveler By Ember (ft.eleven}"  at truecenter with fade
