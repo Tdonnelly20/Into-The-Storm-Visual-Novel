@@ -16,6 +16,8 @@ label start:
             renpy.music.register_channel("Wind", "music", True)
         init python:
             renpy.music.register_channel("Hail", "music", True)
+        init python:
+            renpy.music.register_channel("Rain", "music", True)
         scene main_menu
         python:
             protagName = renpy.input("What is your name?", length=32)
@@ -25,13 +27,14 @@ label start:
             $ timer_range = 0
             $ timer_jump = 0
             $ nationalist_points = 0
-            $ attendant = 0
+            $ attendantConvo = 0
             $ friendship = 0
             $ nameKnown =False
             $ helped = 0
             $ nameVesta = 'Passenger'
             $ nameVestaU = 'The passenger'
             $ nameVestaL = 'the passenger'
+            $ nameNell = 'Attendant'
             $ nameNellU ='The attendant'
             $ nameNellL='the attendant'
 
@@ -41,6 +44,7 @@ label start:
             define Passenger=DynamicCharacter("nameVesta")
             define Vesta=DynamicCharacter("nameVestaU")
             define vesta=DynamicCharacter("nameVestaL")
+            define Attendant=DynamicCharacter("nameNell")
             define Nell = DynamicCharacter("nameNellU")
             define nell = DynamicCharacter("nameNellL")
 
@@ -52,6 +56,8 @@ label start:
         Please choose a duration now."""
 
         menu:
+            "0 seconds.":
+                $ timeLimit=0.1
             "5 seconds.":
                 $ timeLimit=5
             "15 seconds.":
@@ -195,7 +201,7 @@ label start:
                 hide screen countdown
                 show pass qu sit n
                 "{i}[Vesta] looks out the window silently.{/i}"
-                "{i}You reach to turn on the radio, thinking she is finished talking, but [vesta] breaks the awkward silence before you can turn it on.{/i}"
+                "{i}You reach to turn on the radio, but [vesta] breaks the awkward silence before you can turn it on.{/i}"
                 show pass qu sit i
                 Passenger "Is traffic always this bad?"
                 Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
@@ -285,7 +291,7 @@ label start:
                 show pass qu sit n
                 Passenger "Oh, it just does that sometimes."
                 "{i}She shifts in her seat.{/i}"
-                Pilot "There's an open bunk for you below the ship"
+                Pilot "There's an open bunk for you below the ship."
                 hide pass qu sit s with fade
                 "{i}Still looking uncomfortable, [vesta] heads down below.{/i}"
                 jump choice4_end
@@ -348,7 +354,7 @@ label start:
             stop Radio
             Passenger "Do you think the storm will hit us before we reach Viacaellum?"
             label Storm_Warning:
-                $ timer_jump = 'menu_Storm_Warning'
+                $ timer_jump = 'menu_neutral_Storm_Warning'
             show screen countdown
             menu:
                 "Do you want to turn back?":
@@ -405,7 +411,7 @@ label start:
             "{i}You nod, and begin the apparatus’ refueling process. When you turn to head inside the building, you see [vesta] still standing outside.{/i}"
             "{i}She glances back at you before opening the door, the anxiety of entering an unfamiliar place clearly giving her some pause.{/i}"
             label wave:
-                $ timer_jump = 'menu_Wave'
+                $ timer_jump = 'menu_Wave_neutral'
                 show screen countdown
             menu:
                 "{i}Wave to her to go in.{/i}":
@@ -415,10 +421,11 @@ label start:
                     jump enter
                 "{i}Look away.{/i}":
                     hide screen countdown
-                    jump wave_neutral
-            label wave_neutral:
+                    jump menu_Wave_neutral
+            label menu_Wave_neutral:
                 hide screen countdown
-                "{i}You look away, and notice out of the corner of your eye her shoulders sag slightly. Nevertheless, she squares them again, pushing on the door, crossing the threshold and giving you a glimpse of the empty counter.{/i}"
+                "{i}You look away, and notice out of the corner of your eye her shoulders sag slightly.{/i}"
+                "{i}Nevertheless, she squares them again, pushing on the door, crossing the threshold, and giving you a glimpse of the empty counter.{/i}"
                 jump enter
             label enter:
                 hide pass with fade
@@ -455,22 +462,23 @@ label start:
                     jump Hear_About_Gatherings
                 "{i}Talk to refuel station attendant.{/i}":
                     hide screen countdown
-                    $ attendant += 1
+                    $ attendantConvo += 1
                     jump conversation_with_attendant
             label menu_neutral5:
                 hide screen countdown
                 jump Hear_About_Gatherings
             label conversation_with_attendant:
                 Passenger "Can you turn that off?"
-                Nell "Gladly, I can't stand that crap."
+                Attendant "Gladly, I can't stand that crap."
                 "{i}[Nell] switches the radio off and looks up as the bell rings with a smile.{/i}"
-                Nell "Hey, [Pilot]! Where’ve you been? You haven’t stopped by in a while."
+                Attendant "Hey, [Pilot]! Where’ve you been? You haven’t stopped by in a while."
                 Pilot "Ah, you know how piloting is, Nell. I don’t exactly get to chose where I go."
+                $ nameNell ='Nell'
                 $ nameNellU ='Nell'
                 $ nameNellL='Nell'
-                Nell "Fair enough, now come take a seat and I’ll make you your usual once I finish up here."
+                Attendant "Fair enough, now come take a seat and I’ll make you your usual once I finish up here."
                 "{i}As you sit down, Nell turns back to [vesta].{/i}"
-                Nell "If they win the election, they’d just have us revert back to how it was when this whole thing fell apart."
+                Attendant "If they win the election, they’d just have us revert back to how it was when this whole thing fell apart."
                 jump Fell_Apart
             label Hear_About_Gatherings:
                 "{i}You give [nell] who stands behind the counter a wave as you enter, silently taking a seat and focusing on the radio.{/i}"
@@ -513,8 +521,6 @@ label start:
                 "{i}You get to your feet, waiving goodbye to [nell] as you exit.{/i}"
                 jump choice5_end
             label Fell_Apart:
-                $ timer_jump = 'menu_neutral5'
-                show screen countdown
                 menu:
                     "What do you mean fell apart?":
                         hide screen countdown
@@ -529,27 +535,27 @@ label start:
                 label attendant_monologue:
                     Pilot "What do you mean fell apart"
                     show pass std t at bottomRight
-                    Nell "What do you think I mean?"
+                    Attendant "What do you think I mean?"
                     show rs clerk t at lower
-                    Nell "Terraforming halted nearly a century ago. Haven’t you looked outside? The roads between our cities are a half day of radiation away from crumbling to dust."
-                    Nell "I’ve watched the walls of Domatellium get more cratered every year, and I haven’t seen someone try to repair them since I was a {i}child.{/i}"
-                    Nell """
+                    Attendant "Terraforming halted nearly a century ago. Haven’t you looked outside? The roads between our cities are a half-day of radiation away from crumbling to dust."
+                    Attendant "I’ve watched the walls of Domatellium get more cratered every year, and I haven’t seen someone try to repair them since I was a {i}child.{/i}"
+                    Attendant """
                     My grandmother was one of the head engineers on Domatellium’s terraforming equipment back when it was still functioning, and even then it was failing.
 
-                    They’d been feeding those machines sub-par material for so long that they were beyond salvation.
+                    They’d been feeding those machines subpar material for so long that they were beyond salvation.
 
                     And so people got scared. They got tired of the decline and looked for change, but found it by trying to recreate the past, instead of actually looking toward the future.
 
                     Damnit, I’m starting to sound as preachy as that awful mayor.
                     """
                     "{i}Nell sets down the glass she had been violently drying.{/i}"
-                    Nell """
+                    Attendant """
                     Point being, some pundit got elected that promised change. Tried forcing the engineers to find solutions that didn’t exist, to make the machines work with the wrong materials.
 
                     My grandma got fired then, so I don’t know what happened. She knew it was fruitless, and I guess now I’m in the same position.
                     """
                     "{i}Nell laughs at herself, picking up another glass and going back to drying.{/i}"
-                    Nell "’Cept here I am, drying glasses in a run-down refueling station."
+                    Attendant "’Cept here I am, drying glasses in a run-down refueling station."
                     show rs clerk n at lower
                     "{i}You look over at [vesta], who’s staring at Nell with a look you can’t quite place.{/i}"
                     show pass std n at bottomRight
@@ -566,7 +572,7 @@ label start:
                     Passenger "Oh, and also, I wanted to say thanks, I guess. It was…"
                     "{i}She trails off, clearly unable to find the words to express what she means. Turning quickly, [vesta] leaves as if chased by her unfinished sentence.{/i}"
                     hide pass with fade
-                    Nell "She’s a weird one, huh?"
+                    Attendant "She’s a weird one, huh?"
                     menu:
                         "I guess.":
                             Pilot "She kinda is. All the way to Viacaellum with no luggage is an interesting choice."
@@ -581,18 +587,18 @@ label start:
                     Pilot "Isn’t it possible that this could head in a good direction? The speeches I’ve heard on the radio seem like they’ve got some good points. I even heard them talk about starting terraforming again."
                     Nell "What are you even talking about?"
                     Pilot "I’m just saying that they’re at least {i}trying{/i} to find solutions."
-                    Nell """
+                    Attendant """
                     {i}Solutions?!{/i} They’re just trying to force a fix on something that’s totally broken! This new movement is just repeating the same points that sent Duoterra on the decline a century ago.
 
-                    Ever wonder why the roads between our cities are a half day of radiation away from crumbling to dust?
+                    Ever wonder why the roads between our cities are a half-day of radiation away from crumbling to dust?
 
                     It’s because we wasted our resources trying to fix terraformers so clogged with sub-par material they’d have to be totally rebuilt if they were ever used again, letting everything else fall into disrepair.
                     """
                     Pilot "But that’s exactly what I’m saying! The mayor wants to try and actually fix things! In the speeches--"
-                    Nell "In the speeches! Of course! The speeches where they spout rhetoric and empty promises without a single concrete policy to back it up! I swear--"
+                    Attendant "In the speeches! Of course! The speeches where they spout rhetoric and empty promises without a single concrete policy to back it up! I swear--"
 
                     show pass std i at bottomRight
-                    "{i}Before Nell can work herself up to a full on rant, [vesta] interrupts her, pushes her plate away from her.{/i}"
+                    "{i}Before Nell can work herself up to a full-on rant, [vesta] interrupts her, pushes her plate away from her.{/i}"
                     Passenger "How much longer will we have to wait?"
                     Pilot "It should be done now, actually."
                     Passenger "So we can leave?"
@@ -619,10 +625,10 @@ label start:
                 $ timer_jump = 'menu_neutral6'
             show screen countdown
             menu:
-                "What do you think will happen to Domatellium?" if attendant > 0:
+                "What do you think will happen to Domatellium?" if attendantConvo > 0:
                     hide screen countdown
                     jump conversation_about_attendant
-                "What do you think about the gatherings?" if attendant < 1:
+                "What do you think about the gatherings?" if attendantConvo < 1:
                     hide screen countdown
                     jump conversation_about_gatherings
                 "Why do you wanna leave so badly?":
@@ -663,10 +669,10 @@ label start:
                 Passenger "I mean people haven’t talked about terraforming in decades, and all of a sudden it’s this huge issue that everyone’s so...{i}angry{/i} about."
                 Passenger "I don’t know though. They never seemed that angry to me."
                 hide pass with fade
-                "{i}Before you can respond however, [vesta] climbs inside your ship, clearly ending the conversation.{/i}"
+                "{i}Before you can respond, however, [vesta] climbs inside your ship, clearly ending the conversation.{/i}"
                 jump choice6_end
             label awkward_walk_back:
-                "{i}You and [vesta] walk back to the ship in an awkward silence.{/i}"
+                "{i}You and [vesta] walk back to the ship in awkward silence.{/i}"
                 hide pass with fade
                 "{i}When you reach the entrance of the ship, you open your mouth, unsure of what to say, but [vesta] climbs inside before you can say anything.{/i}"
                 jump choice6_end
@@ -708,7 +714,7 @@ label start:
                     "I don't think that's what they’re trying to do.":
                         $ nationalist_points += 1
                         Pilot "I don’t think that’s true. I’m sure there are a couple who are like that, but it really just seems like a group passionate about change for the better."
-                        Passenger "What do you even know? You think you can make a judgment on it based on a couple radio broadcasts?"
+                        Passenger "What do you even know? You think you can make a judgment on it based on a couple of radio broadcasts?"
                         hide pass with fade
                         "{i}[Vesta] climbs inside the ship before you can respond, her jaw set with frustration.{/i}"
                     "You're right.":
@@ -721,15 +727,15 @@ label start:
                         "{i}[Vesta] climbs into your ship before you can ask what she meant, clearly done with the conversation.{/i}"
                 jump choice6_end
             label choice6_end:
-                    scene rd front
-                    show cp front
-                    show ext_rfstation
-                    hide ext_rfstation with Dissolve(1.0)
-                    pause .5
-                    stop bg_noise
-                    "{i}As you climb into the pilot’s seat, you can’t stop thinking about what you heard earlier.{/i}"
+                scene rd front
+                show cp front
+                show ext_rfstation
+                hide ext_rfstation with Dissolve(1.0)
+                pause .5
+                stop bg_noise
+                "{i}As you climb into the pilot’s seat, you can’t stop thinking about what you heard earlier.{/i}"
 
-                    "{i}You drive into the night, but eventually you decide to turn in.{/i}"
+                "{i}You drive into the night, but eventually you decide to turn in.{/i}"
 
         label comfort_passenger_scenes:
             transform thru_door:
@@ -803,7 +809,7 @@ label start:
                             Passenger "What if things go bad? What if I’ve left and something gets instated and it means I can’t go back!"
                             "{i}[Vesta]’s body seems racked with panic for a second, and she lets out a small wail.{/i}"
                             label convo2:
-                                $ timer_jump = 'menu_convo2'
+                                $ timer_jump = 'menu_convo2_neutral'
                                 show screen countdown
                             label menu_convo2:
                                 menu:
@@ -825,12 +831,12 @@ label start:
                                         "{i}You reach out to her, placing your hand in hers.{/i}"
                                         "{i} Letting out another small noise, she grips your hand so tight her knuckles go white, holding on as if for dear life.{/i}"
                                         "{i}A second later, you find your arms wrapped around her as she hangs on to your torso, her sobs shaking both of you.{/i}"
-                                        "{i}Moments pass, and [vesta] seems to gain control of herself, pulling back with an ashamed look on her face.{/i}"
+                                        "{i}Moments pass and [vesta] seems to gain control of herself, pulling back with an ashamed look on her face.{/i}"
                                         Passenger "I..."
                                         Passenger "I’m sorry. That was so inappropriate."
                                         "{i}You sit back, still not totally sure what to say.{/i}"
                                         jump explain_past
-                                label convo2_neutral:
+                                label menu_convo2_neutral:
                                     hide screen countdown
                                     "{i}You sit back, trying to give her space, but her body just seems to get tighter and tighter, her sobs ever weaker and more desperate.{/i}"
                                     "{i}After what feels like an eternity, her voice, tiny and thin, makes its way out from between her clenched teeth.{/i}"
@@ -849,7 +855,7 @@ label start:
                             Pilot "Why... Do you think it was stupid? "
                             "{i}She looks away again, her face contorted into one of anguish.{/i}"
                             Passenger " I...I’ve made mistakes. So, so, so many."
-                            "{i}She takes a moment to let the tears in her eyes subside.{/i}"
+                            "{i}She takes a moment to let the tears in her eyes subsided.{/i}"
                             Passenger "And now...I don’t know that I can go back. I’m so...terrified. I’m terrified that by leaving I’ve fucked everything up and…"
                             "{i}Trailing off, [vesta] looks back at you.{/i}"
                             jump explain_past
@@ -869,7 +875,7 @@ label start:
                         jump choice7_end
                 label explain_past:
                     Passenger """
-                    Like I said...I haven’t exactly had the best track record my whole life.
+                    I haven’t exactly had the best track record my whole life.
 
                      I used to be one of them. Y’know, believe in the whole terraforming thing, or whatever. A “neighbor,” I guess.
                     """
@@ -953,6 +959,7 @@ label start:
             label choice7_end:
 
     label Act3:
+        #TODO CHECK FOR BUGS
         label vista_scenes:
             show black with fade
             scene rd front
@@ -971,7 +978,7 @@ label start:
             "{i}You’re worried about the storm.{/i}"
             "{i}It’s bigger than any you’ve ever driven through before, and even with only a few hundred miles left of the journey, you don’t know if you’ll be able to beat it to Viacaellum like you thought you would.{/i}"
             label weatherLie:
-                $ timer_jump = 'menu_neutral9'
+                $ timer_jump = 'menu_weatherLie_neutral'
             show screen countdown
             menu:
                 "No, I don't.":
@@ -994,7 +1001,7 @@ label start:
                     show pass qu sit s
                     "{i}[Vesta] bites her lip nervously, twisting her hands in her lap. She doesn’t seem in the mood to say anymore, fixated on the dark clouds barely visible on the horizon.{/i}"
                     jump weatherLie_end
-            label menu_neutral9:
+            label menu_weatherLie_neutral:
                 hide screen countdown
                 Pilot "I don't know."
                 jump weatherLie_end
@@ -1038,7 +1045,7 @@ label start:
                     "{i}Clearly quite shaken by the news, [vesta] hastily throws her coat on and smashes her helmet on over her head before rushing outside.{/i}"
                     hide pass with fade
             label radioChoice:
-                $ timer_jump = 'menu_radioChoice'
+                $ timer_jump = 'menu_radioChoice_neutral'
                 show screen countdown
             menu:
                 "{i}Check on [Passenger].{/i}":
@@ -1047,7 +1054,7 @@ label start:
                 "{i}Keep tuning for the weather channel.{/i}":
                     hide screen countdown
                     jump full_weather_Report
-            label radioChoice_neutral:
+            label menu_radioChoice_neutral:
                 hide screen countdown
                 jump full_weather_Report
             label full_weather_Report:
@@ -1056,21 +1063,16 @@ label start:
                 "{i}You continue to tune the radio, attempting to catch Viacaellum’s weather channel. It takes a few times, but you eventually get it.{/i}"
                 Radio "--we haven’t seen a storm like this in years. In fact, this may be the largest storm we’ve been able to monitor in almost a century."
                 "{i}The tone of the radio is entirely too jovial for the news it delivers.{/i}"
-                Radio "Truly a once in a lifetime experience, but not one I’d recommend checkin’ out if you don’t have the proper equipment."
+                Radio "Truly a once-in-a-lifetime experience, but not one I’d recommend checkin’ out if you don’t have the proper equipment."
                 Radio "The governor recently put out a citywide mandate to stay inside, halting all outbound travel until this truly historic storm has passed through."
-                Radio "And for those of you too unlucky to be outside city walls when this things hits…"
+                Radio "And for those of you too unlucky to be outside city walls when this thing hits…"
                 Radio "Well, let’s just say if you ain’t a storm chaser, I {i}do not{/i} envy you."
                 Radio "{i}Anyway,{/i} this message should be on repeat until we receive more news, so enjoy my illustrious voice in the meantime."
                 "{i}The radio begins to repeat, looping through the same obnoxious message a few times before you shut it off.{/i}"
                 "{i}Not long after you do, you hear the sound of the hatch in the sitting room being wrenched open, and a shivering passenger storms inside.{/i}"
                 jump radioChoice_end
             label radioChoice_end:
-                #TODO Fix transition
-                "{i}Eventually, [vesta] comes back onto the ship. She tries to casually hide her face, but you can see her eyes are red and puffy.{/i}"
-                Pilot "The storm is getting really bad--"
-                "{i}[Vesta] cuts you off.{/i}"
-                Passenger "Whatever, let’s keep going. I can’t handle this wasteland much longer."
-                jump choice8_end
+                jump menu_neutral8
             transform Vista:
                 xzoom -1
             label choice8:
@@ -1082,7 +1084,7 @@ label start:
                 "{i}When you arrive, you find her staring out over the vast expanse of lifeless terrain, shivering even through her thick coat.{/i}"
                 "{i}You stop next to her, contemplating the empty valley for a second. Wind howls past you, knocking dust and small rocks off the cliff. In the far distance, you watch storm clouds creep slowly over the horizon.{/i}"
                 "{i}[Vesta] looks over at you, finally acknowledging your presence.{/i}"
-                $ timer_jump = 'menu_neutral8'
+                $ timer_jump = 'silent8_neutral'
                 show screen countdown
             menu:
                 "What's wrong?":
@@ -1103,7 +1105,7 @@ label start:
                         Passenger "The next morning, I didn’t even pack. And now we’re here, I guess."
                         "{i}She looks back at you, though you can’t tell what her expression might be behind the mask.{/i}"
                         jump apologize
-                    elif friendship >1:
+                    elif friendship > 2:
                         Passenger "I live--"
                         "{i}She catches herself.{/i}"
                         Passenger "{i}Used to{/i} live in one of the neighborhoods they mentioned."
@@ -1124,7 +1126,7 @@ label start:
                         "{i}You open your mouth to say something, but no words come.{/i}"
                         Passenger "Let’s get going then, my future awaits!"
                         "{i}She turns around, clearly done with the austere view.{/i}"
-                        jump choice8_end
+                        jump return_to_ship
                     else:
                         "{i}[Vesta] contemplates her response for a second, as if deciding if it’s worth answering the question.{/i}"
                         Passenger"""
@@ -1139,23 +1141,25 @@ label start:
                         "{i}Silence descends between the two of you, the wind howling even louder.{/i}"
                         Pilot "You should head back to the ship now. We want to make it to Viacaellum before the storm hits, and it’s going to be closer than I’d like."
                         "{i}She nods silently, turning around, clearly done with the austere view.{/i}"
-                        jump choice8_end
+                        jump return_to_ship
                 "{i}Stay silent{/i}":
-                    hide screen countdown
-                    """
-                    {i}You say nothing, simply standing with her in silence.{/i}
+                    jump silent8_neutral
+            label silent8_neutral:
+                hide screen countdown
+                """
+                {i}You say nothing, simply standing with her in silence.{/i}
 
-                    {i}[Vesta] turns her eyes back to the horizon, watching the dark storm clouds grow slowly closer.{/i}
+                {i}[Vesta] turns her eyes back to the horizon, watching the dark storm clouds grow slowly closer.{/i}
 
-                    {i}After a few moments, the silence seems to settle in, the anticipation of a conversation fading, and the two of you stand together in a kind of camaraderie, taking solace in watching the storm swallow the world.{/i}
+                {i}After a few moments, the silence seems to settle in, the anticipation of a conversation fading, and the two of you stand together in a kind of camaraderie, taking solace in watching the storm swallow the world.{/i}
 
-                    {i}A tiny streak of sheet lightning ripples across the clouds, traveling for what you know to by miles across the storm front, startling both you and [vesta].{/i}
-                    """
-                    Pilot "It might be time to head back to the ship. The storm is only going to get closer, and we don’t want to get caught in it."
-                    "{i}Shaking herself, [vesta] starts as if coming out of a trance.{/i}"
-                    Passenger "...Yeah. Of course."
-                    "{i}She takes one last glance out over the landscape before beginning to walk silently back to the ship.{/i}"
-                    jump choice8_end
+                {i}A tiny streak of sheet lightning ripples across the clouds, traveling for what you know to by miles across the storm front, startling both you and [vesta].{/i}
+                """
+                Pilot "It might be time to head back to the ship. The storm is only going to get closer, and we don’t want to get caught in it."
+                "{i}Shaking herself, [vesta] starts as if coming out of a trance.{/i}"
+                Passenger "...Yeah. Of course."
+                "{i}She takes one last glance out over the landscape before beginning to walk silently back to the ship.{/i}"
+                jump return_to_ship
             label apologize:
                 menu:
                     "I'm so sorry.":
@@ -1163,13 +1167,13 @@ label start:
                         "{i}You search for more words, but can’t find any.{/i}"
                         "{i}[Vesta] fixes her gaze on the horizon.{/i}"
                         Passenger "I...don’t be. It’s all over now. I can’t dwell on the past."
-                        "{i}She squares her shoulders, as if forcing herself to feel sure.{/i}"
+                        "{i}She squares her shoulders as if forcing herself to feel sure.{/i}"
                         Passenger "The choices they made are theirs. I’ve just got to make do with mine."
                         Passenger "I’m not going back. Even if I wanted to, everything I know is gone. That part of my life…"
                         Passenger "It’s gone now. Literally."
                         "{i}[Vesta] turns around, clearly done with the austere view.{/i}"
                         Passenger "Can we just get going? I can’t handle this wasteland much longer."
-                        jump choice8_end
+                        jump return_to_ship
                     "You can't blame yourself.":
                         $ friendship += 1
                         Pilot "You did the right thing. You tried to warn them and they didn't listen."
@@ -1184,32 +1188,43 @@ label start:
                         Passenger "It’s gone now. Literally."
                         "{i}[Vesta] turns around, clearly done with the austere view.{/i}"
                         Passenger "Can we just get going? I can’t handle this wasteland much longer."
-                        jump choice8_end
+                        jump return_to_ship
             label menu_neutral8:
                 hide screen countdown
-                jump choice8_end
-            label choice8_end:
+                scene rd front
+                show kn table2
+                show pass qu sit n at sitAtTable
+                show table2t
+                with fade
+                "{i}Eventually, [vesta] comes back onto the ship. She tries to casually hide her face, but you can see her eyes are red and puffy.{/i}"
+                Pilot "The storm is getting really bad--"
+                "{i}[Vesta] cuts you off.{/i}"
+                Passenger "Whatever, let’s keep going. I can’t handle this wasteland much longer."
+                jump pre_crash_radio_scenes
+            label return_to_ship:
+                scene rd front
+                show kn table2
+                show pass qu sit s at sitAtTable
+                show table2t
+                with fade
+                "The two of you enter the ship, and the passenger immediately takes a seat at the kitchen table."
 
-        label crash_scenes:
+        label pre_crash_radio_scenes:
             play Wind 'audio/amb-sfx_strong-wind.mp3' fadein 1.0
-            scene rd front
-            show kn thru_door
-            show pass qu sit i at thru_door
-            with fade
-            Passenger "Can we just get going? I can’t handle this wasteland much longer."
+            play Rain 'audio/amb-sfx_rain-on-metal-roof.mp3' fadein 5.0
             label checkRadio:
-                $ timer_jump = 'menu_checkRadio'
+                $ timer_jump = 'menu_checkRadio_neutral'
             show screen countdown
             menu:
-                "{i}Check radio first.{/i}":
+                "{i}Check radio.{/i}":
                     hide screen countdown
                     $ friendship -= 1
                     jump checking_Radio
-                "{i}Agree and head to cockpit.{/i}":
+                "{i}Head to cockpit.{/i}":
                     hide screen countdown
                     $friendship+=1
                     jump checkRadio_end
-            label checkRadio_neutral:
+            label menu_checkRadio_neutral:
                 hide screen countdown
                 jump checking_Radio
             label checking_Radio:
@@ -1241,8 +1256,11 @@ label start:
                 Pilot "Just brace yourself though. This is going to be a...bumpy ride."
                 jump checkRadio_end
             label checkRadio_end:
+
+        label crash_scenes:
+            label actual_crash:
                 play Hail 'audio/sfx_hail.mp3' fadein 1.0
-                scene rd front
+                scene rd storm
                 hide pass
                 hide kn
                 with fade
@@ -1257,11 +1275,11 @@ label start:
                 play sound 'audio/sfx_ear_ringing.mp3'
                 pause .5
                 #TODO Blurry image of kitchen
-                scene rd front
+                scene rd storm
                 show black
-                show kn table2 behind rd
-                show cp crashed behind black
+                show kn crashed behind black
                 hide black with Dissolve(3.0)
+                play sound 'audio/sfx_creak.mp3'
                 "{i}The ship groans as you get up.{/i}"
                 hide cp
                 hide rd
@@ -1275,28 +1293,99 @@ label start:
                 "{i}Grasping for one of the walls, you lose your balance, sliding down until you hit the wall hard, sending shocks up your legs.{/i}"
                 "{i}Water laps around the ankles of your boots, and you realize the level has already begun to rise.{/i}"
                 "{i}Looking around, you realize you are in the kitchen, and must have fallen out of the cockpit and down through the hatch.{/i}"
-                if friendship >3:
-                    jump pass_helps_outside
-                elif friendship<0:
+                if friendship<=0:
                     jump pass_refuses_to_help
                 else:
-                    jump pass_helps_inside
-            label pass_helps_outside:
+                    jump pass_helps
+
+            label pass_helps:
                 "{i}You call out for [vesta] again, and this time hear a crash in the next room.{/i}"
                 "{i}[Vesta] yelps, and you feel yourself twinge with sympathetic pain. Scrambling forward you find her sprawled against the table, surrounded by pieces of broken glass from the mirror that toppled next to her.{/i}"
-                "{i}You reach out, managing to pull her into the kitchen, and feel water begin to fill your boots.{/i}"
+                show pass fall 1
+                "{i}You reach out, managing to pull her into the kitchen, and feel he pressure of the water around your knees, lapping at the tops of your boots as if desperate to poor in.{/i}"
                 "{i}[Vesta] looks around, finally seeming to comprehend that things are not as they should be.{/i}"
                 Passenger "What happened?!"
                 "{i}She yells this, her voice slightly slurred.{/i}"
                 Pilot "We crashed! The ship got hit by one of the largest gusts I’ve ever experienced!"
-                "{i}Your voice is nearly drowned out by a peal of thunder, and you find yourself gasping for breath.{/i}"
+                "{i}Your voice is nearly drowned out by a peal of thunder, and you find yourself gasping for breath, creating a cloud of mist in the freezing air.{/i}"
                 Pilot "We need to find our helmets! I think there’s a hole somewhere in the ship, and the air is going to become unbreathable within the next few minutes!"
                 "{i}[Vesta] nods, trudging unsteadily through the rising water to the desk in the next room.{/i}"
+                hide pass with fade
                 "{i}You begin to fumble around in the darkness, searching desperately for your helmet.{/i}"
-            label pass_helps_inside:
-                "TBD PASSENGER AGREES TO HELP FROM THE INSIDE."
-                "TBD YOU BOTH FIX THE SHIP'S LEAK."
+                Passenger "I found it!"
+                show pass_fall_h1 with fade
+                "{i}The passenger stumbles back, pulling her helmet over her disheveled hair.{/i}"
+                "{i}You nod at her, giving a shaky thumbs up before going back to searching.{/i}"
+                "{i}Minutes pass, and you find yourself begin to cough, the air growing steadily thicker as your search becomes more frantic.{/i}"
+                "{i}The passenger joins you, throwing open the doors of cabinets and plunging her hands into the ever-rising water.{/i}"
+                Passenger "I do-d-don’t think it’s h-here!"
+                "{i}You look over and realize that she’s shivering hard, her fingers faintly blue in the dim emergency lights.{/i}"
+                Pilot "We’re going to have to stop searching! Is your coat dry?"
+                Passenger "I...I think so."
+                "{i}The passenger looks around confused as if trying to remember where she put it.{/i}"
+                Passenger "It...it’s on-n t-t-top of my bunk!"
+                hide pass with fade
+                "{i}Without you saying anything, the passenger clambers into the next room, doing her best to avoid the nearly mid-thigh high water despite her violent shivering.{/i}"
+                "{i}You reach out for the ladder to the cockpit, clambering shakily up its rungs to the dry safety.{/i}"
+                show cp crashed
+                Pilot "Come up to the cockpit! We should be able to seal it off long enough to make it through the storm!"
+                "{i}The passenger struggles up the ladder a second later, her coat grasped in one arm. You reach over and pull the hatch down behind her, sealing off the cockpit.{/i}"
+                "{i}You breathe deeply, savoring the recycled air as Duoterra’s atmosphere is filtered out.{/i}"
+                Passenger "So...what now?"
+                Pilot "I...don’t know."
+                "{i}You shake your head, trying to gain some semblance of your bearings back.{/i}"
+                Pilot "We have to call for help. The emergency power still works, so I’ll be able to send a direct distress transmission to Viacaellum."
+                "{i}The passenger looks relieved, and she seems to relax slightly. She removes her helmet, revealing a face far paler than what you’ve become accustomed to.{/i}"
+                "{i}Suddenly, her body is wracked with convulsions, her teeth chattering so hard you can easily hear it from across the cockpit.{/i}"
+                "{i}She reaches for her coat, attempting to put it on, but the passenger struggles to maintain a grip. You reach out, helping her slide her shaking arms through the sleeves and feet into the rubber bottoms.{/i}"
+                "{i}Even after a few minutes the passenger continues to shudder, and you notice her lips remain slightly blue, her skin still pale in the faint light. She looks off to one side when she notices your worried look, staring out of the windscreen.{/i}"
+                "{i}Her eyes widen suddenly, and she points a shaking finger out at the storm.{/i}"
+                "{i}You follow her gaze, and see the cause of the leak: a gash a few feet long that rain is pouring into.{/i}"
+                Passenger "C-can we f-f-fix that?"
+                if friendship > 3:
+                    jump pass_helps_outside
+                else:
+                    jump pass_helps_inside
+                label pass_helps_outside:
+                    Pilot "I...maybe. If we could, it would let us divert heat to the cockpit as it wouldn’t be immediately lost trying to keep the engine from entirely freezing over."
+                    Pilot "There’s an emergency welder and scrap metal down below, but going out in this storm is too dangerous. And besides--"
+                    hide pass with fade
+                    "{i}Before you can finish, the passenger is gone, climbing down the ladder.{/i}"
+                    Passenger "Where is it-t?"
+                    menu:
+                        "{i}Tell her where it is.{/i}":
+                            Pilot "Look on the wall behind the ladder. There should be a compartment."
+                            "{i}You hear a clanging noise as the compartment is opened, and moments later the pilot reemerges.{/i}"
+                            show pass fall h1
+                            "{i}Without hesitation, she reaches up to the emergency release on the hatch on the ceiling of the cockpit, only glancing back at you for a second.{/i}"
+                            Passenger "B-b-brace y-yourself!"
+                            "{i}The passenger is imbued with a calm you’ve never seen before, and despite her constant shivering, she seems almost ready.{/i}"
+                            "{i}Hoisting herself into the storm, the hatch slams shut behind her, the blast of air covering the windshield instantly in frost.{/i}"
+                            "{i}You leap forward, attempting to wipe the glass clean, but your arm feels weak, and you lose your balance on the suddenly icy floor.{/i}"
+                            "{i}Collapsing against the dashboard, you feel your skin stick to the metal, the pain so sharp it cuts through the numbness in your fingers.{/i}"
+                            "{i}Outside, the passenger is blown against the ship, falling hard on the deck of the ship.{/i}"
+                            "{i}She struggles to her feet, however, sliding her pieces of metal across the gash wielding the welder with ease only granted by experience.{/i}"
+                            "{i}Before you know it she finishes, and begins to stumble back toward you, her feet sinking into the wet sand that surrounds the ship.{/i}"
+                            "{i}A gust catches her from behind, throwing the passenger to the ground and sending the emergency welder flying.{/i}"
+                            "{i}You hear yourself cry out, and you rip your hands from the dashboard, grasping at nothing. Your breath fogs up the windshield, obscuring your view.{/i}"
+                            "{i}For a second, you can hear nothing by the howling of the wind and the deafening sound of hail hitting the ship.{/i}"
+                            "{i}Then, just as you are about to give up hope, a bang startles you overhead as the hatch is wrenched open, and hail rains through, accompanied by wind that blows your hair back and causes ice to crust across your skin.{/i}"
+                            Passenger "Y-y-you n-n-n-need y-your c-c-coat!"
+                            "{i}The passenger shakes so hard she can barely get the words out, but her blur of a finger points you to where it lies crumpled in a corner.{/i}"
+                            "{i}You crawl across the ground, feeling the face on your skin crack as you attempt to form words.{/i}"
+                            Pilot "Heat-t-ting c-controls are on the f-far l-left-t. If-f y-you’ve s-s-sealed th-the hole you sh-sh-should be able to switch it-t to only the c-c-cockp-pit."
+                            "{i}You pull your coat on, wishing your body could generate enough heat to warm it up.{/i}"
+                            "{i}Following your commands, the passenger redirects the heat, and you feel warm air fill the room as the atmosphere is filtered out, your breathing slowly becoming less shaky and strained.{/i}"
+                            "{i}As the heat washes over you, you feel yourself begin to fall into unconsciousness, your body struggling to maintain heat.{/i}"
+                            "{i}As your eyes close, you see the passenger sink to the floor as well, unable to continue to function.{/i}"
+                            #TODO A classy transition and wake-up scene
+                        "{i}Tell her to come back.{/i}":
+                            jump pass_helps_inside
+                label pass_helps_inside:
+                    #TODO pass help inside
+
             label pass_refuses_to_help:
+                #TODO pass refuses to help
                 "TBD PASSENGER REFUSES TO HELP."
                 "TBD YOU FIX THE SHIP'S LEAK."
             stop Wind fadeout 5.0
