@@ -1207,7 +1207,7 @@ label start:
                 show pass qu sit s at sitAtTable
                 show table2t
                 with fade
-                "The two of you enter the ship, and the passenger immediately takes a seat at the kitchen table."
+                "The two of you enter the ship, and [vesta] immediately takes a seat at the kitchen table."
 
         label pre_crash_radio_scenes:
             play Wind 'audio/amb-sfx_strong-wind.mp3' fadein 1.0
@@ -1314,31 +1314,31 @@ label start:
                 "{i}You begin to fumble around in the darkness, searching desperately for your helmet.{/i}"
                 Passenger "I found it!"
                 show pass_fall_h1 with fade
-                "{i}The passenger stumbles back, pulling her helmet over her disheveled hair.{/i}"
+                "{i}[Vesta] stumbles back, pulling her helmet over her disheveled hair.{/i}"
                 "{i}You nod at her, giving a shaky thumbs-up before going back to searching.{/i}"
                 "{i}Minutes pass, and you find yourself beginning to cough, the air growing steadily thicker as your search becomes more frantic.{/i}"
-                "{i}The passenger joins you, throwing open the doors of cabinets and plunging her hands into the ever-rising water.{/i}"
+                "{i}[Vesta] joins you, throwing open the doors of cabinets and plunging her hands into the ever-rising water.{/i}"
                 Passenger "I do-d-don’t think it’s h-here!"
                 "{i}You look over and realize that she’s shivering hard, her fingers faintly blue in the dim emergency lights.{/i}"
                 Pilot "We’re going to have to stop searching! Is your coat dry?"
                 Passenger "I...I think so."
-                "{i}The passenger looks around, confused as if trying to remember where she put it.{/i}"
+                "{i}[Vesta] looks around, confused as if trying to remember where she put it.{/i}"
                 Passenger "It...it’s on-n t-t-top of my bunk!"
                 hide pass with fade
-                "{i}Without you saying anything, the passenger clambers into the next room, doing her best to avoid the nearly mid-thigh high water despite her violent shivering.{/i}"
+                "{i}Without you saying anything, [vesta] clambers into the next room, doing her best to avoid the nearly mid-thigh high water despite her violent shivering.{/i}"
                 "{i}You reach out for the ladder to the cockpit, clambering shakily up its rungs to the dry safety.{/i}"
                 show cp crashed
                 Pilot "Come up to the cockpit! We should be able to seal it off long enough to make it through the storm!"
-                "{i}The passenger struggles up the ladder a second later, her coat grasped in one arm. You reach over and pull the hatch down behind her, sealing off the cockpit.{/i}"
+                "{i}[Vesta] struggles up the ladder a second later, her coat grasped in one arm. You reach over and pull the hatch down behind her, sealing off the cockpit.{/i}"
                 "{i}You breathe deeply, savoring the recycled air as Duoterra’s atmosphere is filtered out.{/i}"
                 Passenger "So...what now?"
                 Pilot "I...don’t know."
                 "{i}You shake your head, trying to gain some semblance of your bearings back.{/i}"
                 Pilot "We have to call for help. The emergency power still works, so I’ll be able to send a direct distress transmission to Viacaellum."
-                "{i}The passenger looks relieved, and she seems to relax slightly. She removes her helmet, revealing a face far paler than what you’ve become accustomed to.{/i}"
+                "{i}[Vesta] looks relieved, and she seems to relax slightly. She removes her helmet, revealing a face far paler than what you’ve become accustomed to.{/i}"
                 "{i}Suddenly, her body is wracked with convulsions, her teeth chattering so hard you can easily hear it from across the cockpit.{/i}"
-                "{i}She reaches for her coat, attempting to put it on, but the passenger struggles to maintain a grip. You reach out, helping her slide her shaking arms through the sleeves and feet into the rubber bottoms.{/i}"
-                "{i}Even after a few minutes, the passenger continues to shudder, and you notice her lips remain slightly blue, her skin still pale in the faint light. She looks off to one side when she notices your worried look, staring out of the windscreen.{/i}"
+                "{i}She reaches for her coat, attempting to put it on, but [vesta] struggles to maintain a grip. You reach out, helping her slide her shaking arms through the sleeves and feet into the rubber bottoms.{/i}"
+                "{i}Even after a few minutes, [vesta] continues to shudder, and you notice her lips remain slightly blue, her skin still pale in the faint light. She looks off to one side when she notices your worried look, staring out of the windscreen.{/i}"
                 "{i}Her eyes widen suddenly, and she points a shaking finger out at the storm.{/i}"
                 "{i}You follow her gaze and see the cause of the leak: a gash a few feet long that rain is pouring into.{/i}"
                 Passenger "C-can we f-f-fix that?"
@@ -1350,7 +1350,7 @@ label start:
                     Pilot "I...maybe. If we could, it would let us divert heat to the cockpit as it wouldn’t be immediately lost trying to keep the engine from entirely freezing over."
                     Pilot "There’s an emergency welder and scrap metal down below, but going out in this storm is too dangerous. And besides--"
                     hide pass with fade
-                    "{i}Before you can finish, the passenger is gone, climbing down the ladder.{/i}"
+                    "{i}Before you can finish, [vesta] is gone, climbing down the ladder.{/i}"
                     Passenger "Where is it-t?"
                     menu:
                         "{i}Tell her where it is.{/i}":
@@ -1359,25 +1359,25 @@ label start:
                             show pass fall h1
                             "{i}Without hesitation, she reaches up to the emergency release on the hatch on the ceiling of the cockpit, only glancing back at you for a second.{/i}"
                             Passenger "B-b-brace y-yourself!"
-                            "{i}The passenger is imbued with a calm you’ve never seen before, and despite her constant shivering, she seems almost ready.{/i}"
+                            "{i}[Vesta] is imbued with a calm you’ve never seen before, and despite her constant shivering, she seems almost ready.{/i}"
                             "{i}Hoisting herself into the storm, the hatch slams shut behind her, the blast of air covering the windshield instantly in frost.{/i}"
                             "{i}You leap forward, attempting to wipe the glass clean, but your arm feels weak, and you lose your balance on the suddenly icy floor.{/i}"
                             "{i}Collapsing against the dashboard, you feel your skin stick to the metal, the pain so sharp it cuts through the numbness in your fingers.{/i}"
-                            "{i}Outside, the passenger is blown against the ship, falling hard on the deck of the ship.{/i}"
+                            "{i}Outside, [vesta] is blown against the ship, falling hard on the deck of the ship.{/i}"
                             "{i}She struggles to her feet, however, sliding her pieces of metal across the gash wielding the welder with ease only granted by experience.{/i}"
                             "{i}Before you know it, she finishes and begins to stumble back toward you, her feet sinking into the wet sand that surrounds the ship.{/i}"
-                            "{i}A gust catches her from behind, throwing the passenger to the ground and sending the emergency welder flying.{/i}"
+                            "{i}A gust catches her from behind, throwing [vesta] to the ground and sending the emergency welder flying.{/i}"
                             "{i}You hear yourself cry out, and you rip your hands from the dashboard, grasping at nothing. Your breath fogs up the windshield, obscuring your view.{/i}"
                             "{i}For a second, you can hear nothing by the howling of the wind and the deafening sound of hail hitting the ship.{/i}"
                             "{i}Then, just as you are about to give up hope, a bang startles you overhead as the hatch is wrenched open, and hail rains through, accompanied by wind that blows your hair back and causes ice to crust across your skin.{/i}"
                             Passenger "Y-y-you n-n-n-need y-your c-c-coat!"
-                            "{i}The passenger shakes so hard she can barely get the words out, but her blur of a finger points you to where it lies crumpled in a corner.{/i}"
+                            "{i}[Vesta] shakes so hard she can barely get the words out, but her blur of a finger points you to where it lies crumpled in a corner.{/i}"
                             "{i}You crawl across the ground, feeling the face on your skin crack as you attempt to form words.{/i}"
                             Pilot "Heat-t-ting c-controls are on the f-far l-left-t. If-f y-you’ve s-s-sealed th-the hole, you sh-sh-should be able to switch it-t to only the c-c-cockp-pit."
                             "{i}You pull your coat on, wishing your body could generate enough heat to warm it up.{/i}"
-                            "{i}Following your commands, the passenger redirects the heat, and you feel warm air fill the room as the atmosphere is filtered out, your breathing slowly becoming less shaky and strained.{/i}"
+                            "{i}Following your commands, [vesta] redirects the heat, and you feel warm air fill the room as the atmosphere is filtered out, your breathing slowly becoming less shaky and strained.{/i}"
                             "{i}As the heat washes over you, you feel yourself begin to fall into unconsciousness, your body struggling to maintain heat.{/i}"
-                            "{i}As your eyes close, you see the passenger sink to the floor as well, unable to continue to function.{/i}"
+                            "{i}As your eyes close, you see [vesta] sink to the floor as well, unable to continue to function.{/i}"
                             #TODO A classy transition and wake-up scene
                         "{i}Tell her to come back.{/i}":
                             jump pass_helps_inside
