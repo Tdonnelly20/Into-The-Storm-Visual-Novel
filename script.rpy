@@ -22,7 +22,15 @@ label start:
         python:
             protagName = renpy.input("What is your name?", length=32)
             protagName = protagName.strip()
-
+        transform thru_door:
+            xpos .4
+            ypos .1
+            zoom .75
+            xzoom 1
+        transform atChair:
+            xpos .27
+            ypos .1
+            xzoom -1
         label Variables:
             $ timer_range = 0
             $ timer_jump = 0
@@ -701,7 +709,7 @@ label start:
                 Passenger "..."
                 Passenger "But I'd rather not talk about it."
                 Pilot "Alright, we don’t have to."
-                "{i}The two of you silently back to the ship.{/i}"
+                "{i}The two of you walk silently back to the ship.{/i}"
                 hide pass with fade
                 jump choice6_end
             label conversation_about_gatherings:
@@ -738,20 +746,12 @@ label start:
                 "{i}You drive into the night, but eventually, you decide to turn in.{/i}"
 
         label comfort_passenger_scenes:
-            transform thru_door:
-                xpos .4
-                ypos .1
-                zoom .75
-
-            transform atChair:
-                xpos .27
-                ypos .1
-                xzoom -1
             hide cp front with Dissolve(1.0)
             show kn table2 with Dissolve(1.0)
             "{i}As you’re walking to the bunks, you hear muffled sobbing.{/i}"
             show kn thru_door
-            show pass qu sit a at thru_door
+            show pass qu sit a at thru_door behind kn_thru_doort
+            show kn_thru_doort
             with Dissolve(1.0)
             pause .5
             "{i}You poke your head in the doorway of the sitting room and see [vesta]. She’s curled up in one of the chairs with her head in her hands, apparently not having noticed you yet.{/i}"
@@ -779,6 +779,7 @@ label start:
                 jump choice7_end
             label meaningful_conversation_about_past:
                 hide kn thru_door
+                hide kn_thru_doort
                 hide pass
                 with Dissolve(1.0)
                 show sit_2chair
@@ -794,7 +795,7 @@ label start:
                 Passenger "Leaving! If I go through with this, what if I can’t go back? I can’t make this choice now. I...oh God. How could I be this stupid?"
                 "{i}You kneel down next to her, not totally sure what to do.{/i}"
                 label convo1:
-                    $ timer_jump = 'menu_convo1'
+                    $ timer_jump = 'convo1_neutral'
                     show screen countdown
                 label menu_convo1:
                     menu:
@@ -829,7 +830,7 @@ label start:
                                         $ friendship += 1
                                         hide screen countdown
                                         "{i}You reach out to her, placing your hand in hers.{/i}"
-                                        "{i} Letting out another small noise, she grips your hand so tight her knuckles go white, holding on as if for dear life.{/i}"
+                                        "{i}Letting out another small noise, she grips your hand so tight her knuckles go white, holding on as if for dear life.{/i}"
                                         "{i}A second later, you find your arms wrapped around her as she hangs on to your torso, her sobs shaking both of you.{/i}"
                                         "{i}Moments pass, and [vesta] seems to gain control of herself, pulling back with an ashamed look on her face.{/i}"
                                         Passenger "I..."
@@ -859,9 +860,6 @@ label start:
                             Passenger "And now...I don’t know that I can go back. I’m so...terrified. I’m terrified that, by leaving, I’ve fucked everything up and…"
                             "{i}Trailing off, [vesta] looks back at you.{/i}"
                             jump explain_past
-
-                    #TODO
-                    #Fix this neutral
                     label convo1_neutral:
                         hide screen countdown
                         Pilot "I'm sorry, I don't know what to say."
@@ -870,6 +868,10 @@ label start:
                         Passenger "I’m sorry. I just…"
                         Passenger "I need to be alone right now. I can’t deal with this."
                         Pilot "Oh. Yeah, for sure."
+                        show kn thru_door behind pass
+                        show pass qu sit a at thru_door
+                        show kn_thru_doort
+                        with Dissolve(1.0)
                         "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at [vesta], wishing you knew how to help her.{/i}"
                         "{i}Closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
                         jump choice7_end
@@ -915,6 +917,7 @@ label start:
             label combative_conversation_about_relationship_with_passenger:
                 hide kn thru_door
                 hide pass
+                hide kn_thru_doort
                 with Dissolve(1.0)
                 show sit_2chair
                 show pass cr sit a at atChair
@@ -931,7 +934,8 @@ label start:
                 hide pass
 
                 show kn thru_door
-                show pass std i
+                show kn_thru_doort
+                show pass std i behind kn_thru_doort
                 with fade
                 "{i}You go to close the door, but [vesta] gets to her feet.{/i}"
                 Passenger "Why did you even come in here? You’ve been nothing but rude to me since we started driving. What did I even do to you?"
@@ -951,6 +955,7 @@ label start:
                 show black
                 hide pass
                 hide kn thru_door
+                hide kn_thru_doort
                 "{i}She reaches the doorway and slams it shut, causing a bang that echoes around the ship for a few moments.{/i}"
                 show cp front behind black
                 hide black with fade
@@ -959,7 +964,6 @@ label start:
             label choice7_end:
 
     label Act3:
-        #TODO CHECK FOR BUGS
         label vista_scenes:
             show black with fade
             scene rd front
@@ -1207,11 +1211,11 @@ label start:
                 show pass qu sit s at sitAtTable
                 show table2t
                 with fade
-                "The two of you enter the ship, and [vesta] immediately takes a seat at the kitchen table."
+                "{i}The two of you enter the ship, and [vesta] immediately takes a seat at the kitchen table.{/i}"
 
         label pre_crash_radio_scenes:
-            play Wind 'audio/amb-sfx_strong-wind.mp3' fadein 1.0
-            play Rain 'audio/amb-sfx_rain-on-metal-roof.mp3' fadein 5.0
+            play Wind 'audio/amb-sfx_strong-wind.mp3' fadein 10.0
+            play Rain 'audio/amb-sfx_rain-on-metal-roof.mp3' fadein 10.0
             label checkRadio:
                 $ timer_jump = 'menu_checkRadio_neutral'
             show screen countdown
@@ -1259,12 +1263,10 @@ label start:
 
         label crash_scenes:
             label actual_crash:
-                play Hail 'audio/sfx_hail.mp3' fadein 1.0
+                play Hail 'audio/sfx_hail.mp3' fadein 5.0
                 scene rd storm
-                hide pass
-                hide kn
+                show cp front
                 with fade
-                show cp front with fade
                 "{i}You manage to cross nearly half the remaining distance to Viacaellum before the storm hits.{/i}"
                 play sound 'audio/sfx_crash.mp3'
                 pause .5
@@ -1272,13 +1274,14 @@ label start:
                 scene black with fade
                 stop background_music
                 pause 1.0
-                play sound 'audio/sfx_ear_ringing.mp3'
-                pause .5
+                play sound 'audio/sfx_ear_ringing.mp3' fadeout 1.0
+                pause 1.5
                 #TODO Blurry image of kitchen
                 scene rd storm
                 show black
                 show kn crashed behind black
                 hide black with Dissolve(3.0)
+                pause
                 play sound 'audio/sfx_creak.mp3'
                 "{i}The ship groans as you get up.{/i}"
                 hide cp
@@ -1306,6 +1309,7 @@ label start:
                 "{i}[Vesta] looks around, finally seeming to comprehend that things are not as they should be.{/i}"
                 Passenger "What happened?!"
                 "{i}She yells this, her voice slightly slurred.{/i}"
+                play sound 'audio/sfx_thunder.mp3'
                 Pilot "We crashed! The ship got hit by one of the largest gusts I’ve ever experienced!"
                 "{i}Your voice is nearly drowned out by a peal of thunder, and you find yourself gasping for breath, creating a cloud of mist in the freezing air.{/i}"
                 Pilot "We need to find our helmets! I think there’s a hole somewhere in the ship, and the air is going to become unbreathable within the next few minutes!"
@@ -1313,7 +1317,7 @@ label start:
                 hide pass with fade
                 "{i}You begin to fumble around in the darkness, searching desperately for your helmet.{/i}"
                 Passenger "I found it!"
-                show pass_fall_h1 with fade
+                show pass fall h1 with fade
                 "{i}[Vesta] stumbles back, pulling her helmet over her disheveled hair.{/i}"
                 "{i}You nod at her, giving a shaky thumbs-up before going back to searching.{/i}"
                 "{i}Minutes pass, and you find yourself beginning to cough, the air growing steadily thicker as your search becomes more frantic.{/i}"
@@ -1327,8 +1331,11 @@ label start:
                 hide pass with fade
                 "{i}Without you saying anything, [vesta] clambers into the next room, doing her best to avoid the nearly mid-thigh high water despite her violent shivering.{/i}"
                 "{i}You reach out for the ladder to the cockpit, clambering shakily up its rungs to the dry safety.{/i}"
-                show cp crashed
+                scene rd storm
+                show cp crashed behind pass
+                with fade
                 Pilot "Come up to the cockpit! We should be able to seal it off long enough to make it through the storm!"
+                show pass fall h1 with fade
                 "{i}[Vesta] struggles up the ladder a second later, her coat grasped in one arm. You reach over and pull the hatch down behind her, sealing off the cockpit.{/i}"
                 "{i}You breathe deeply, savoring the recycled air as Duoterra’s atmosphere is filtered out.{/i}"
                 Passenger "So...what now?"
@@ -1337,8 +1344,10 @@ label start:
                 Pilot "We have to call for help. The emergency power still works, so I’ll be able to send a direct distress transmission to Viacaellum."
                 "{i}[Vesta] looks relieved, and she seems to relax slightly. She removes her helmet, revealing a face far paler than what you’ve become accustomed to.{/i}"
                 "{i}Suddenly, her body is wracked with convulsions, her teeth chattering so hard you can easily hear it from across the cockpit.{/i}"
-                "{i}She reaches for her coat, attempting to put it on, but [vesta] struggles to maintain a grip. You reach out, helping her slide her shaking arms through the sleeves and feet into the rubber bottoms.{/i}"
-                "{i}Even after a few minutes, [vesta] continues to shudder, and you notice her lips remain slightly blue, her skin still pale in the faint light. She looks off to one side when she notices your worried look, staring out of the windscreen.{/i}"
+                "{i}She reaches for her coat, attempting to put it on, but [vesta] struggles to maintain a grip.{/i}"
+                "{i}You reach out, helping her slide her shaking arms through the sleeves and feet into the rubber bottoms.{/i}"
+                "{i}Even after a few minutes, [vesta] continues to shudder, and you notice her lips remain slightly blue, her skin still pale in the faint light.{/i}"
+                "{i}She looks off to one side when she notices your worried look, staring out of the windscreen.{/i}"
                 "{i}Her eyes widen suddenly, and she points a shaking finger out at the storm.{/i}"
                 "{i}You follow her gaze and see the cause of the leak: a gash a few feet long that rain is pouring into.{/i}"
                 Passenger "C-can we f-f-fix that?"
@@ -1379,24 +1388,33 @@ label start:
                             "{i}As the heat washes over you, you feel yourself begin to fall into unconsciousness, your body struggling to maintain heat.{/i}"
                             "{i}As your eyes close, you see [vesta] sink to the floor as well, unable to continue to function.{/i}"
                             #TODO A classy transition and wake-up scene
+                            jump aftermath
                         "{i}Tell her to come back.{/i}":
                             jump pass_helps_inside
                 label pass_helps_inside:
                     #TODO pass help inside
-
+                    jump aftermath
             label pass_refuses_to_help:
                 #TODO pass refuses to help
                 "TBD PASSENGER REFUSES TO HELP."
                 "TBD YOU FIX THE SHIP'S LEAK."
-            stop Wind fadeout 5.0
-            stop Hail fadeout 5.0
-            if nationalist_points > 1:
-                play background_music "audio/mus_ambient-bad.ogg" fadein 5.0
-            else:
-                play background_music "audio/mus_ambient.ogg" fadein 5.0
-            "TBD AFTER THE STORM PASSES YOU'RE ABLE TO RADIO A TRANSPORT TO PICK YOU UP."
+                jump aftermath
+            label aftermath:
+                show black with fade
+                hide pass
+                hide cp
+                stop Wind fadeout 5.0
+                stop Hail fadeout 5.0
+                stop Rain fadeout 5.0
+                if nationalist_points > 1:
+                    play background_music "audio/mus_ambient-bad.ogg" fadein 5.0
+                else:
+                    play background_music "audio/mus_ambient.ogg" fadein 5.0
+                hide black with fade
+                "TBD AFTER THE STORM PASSES YOU'RE ABLE TO RADIO A TRANSPORT TO PICK YOU UP."
 
         label ending:
+            stop music
             "{i}You go out to where [vesta] is.{/i}"
             scene rd front
             if friendship > 1:
@@ -1450,16 +1468,16 @@ label start:
         show text "Programming by Tate Donnelly{p}{p}Art by Nathan Booth{p}{p}Original Music and Proofreading by Benny Klaiman{p}{p}Writing by Tate Donnelly and Nathan Booth" at truecenter with fade
         pause 10
         hide text with Dissolve(2.0)
-        show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Strong Howling Wind Sound 2 Hours, Swaying Spruce Trees in The Wind By Relaxing Sounds of Nature{p}{p}Heavy Rain Sounds at Night - Sleep, Study, Relax | Ambient Noise Rainstorm, @Ultizzz day#69 by Ultimate Ambient Noise Soundzzz" at truecenter with fade
+        show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Wind Sound Effect By Relaxing Sounds of Nature{p}{p}Rain Sound Effect by SleepDroid Studios Sleep Sounds" at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "10 hours of hard rain on a metal roof (Rain Sleep Sounds) Rain Sounds for Sleeping. Rainfall.lluvia by SleepDroid Studios Sleep Sounds{p}{p}Radio Static - Sound Effect By Audio Library - Free Sound Effects"  at truecenter with fade
+        show text "Thunder Sound Effect by arival0{p}{p}Hail Sound Effect By Free To Use Sounds{p}{p}Radio Static Sound Effect By Sound Effect By Audio Library{p}{p}Plane Crash Sound Effect by Sound Effect Database"  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "Ear Ringing Sound Effect - Free Download HD By SFX and GFX{p}{p}Heavy Hail Sound Effects By Free To Use Sounds{p}{p}8 hours of train station sounds | train station sound effect and railway station sound / 8 Hours Of{p}{p}Plane Crash Sound Effect by Sound Effect Database"  at truecenter with fade
+        show text "Ear Ringing Sound Effect By SFX and GFX{p}{p}Radio Static Sound Effect By Sound Effect By Audio Library{p}{p}Train Station Background Noise By"  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "Mr.Lucky By Karl Jenkins{p}{p}Tibeauthetraveler By Ember (ft.eleven}"  at truecenter with fade
+        show text "Metal Creak By OroBolide8755{p}{p}Mr.Lucky By Karl Jenkins{p}{p}Tibeauthetraveler By Ember (ft.eleven}"  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
         show text "Down to Business (Title/Situational){p}{p}A Bright Future (Good Ending){p}{p}A \"Blight\" Future (Bad Ending){p}{p}by Benny Klaiman"  at truecenter with fade
