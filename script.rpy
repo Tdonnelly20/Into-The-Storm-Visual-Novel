@@ -1302,6 +1302,7 @@ label start:
                     jump pass_helps
 
             label pass_helps:
+                play sound 'audio/sfx_table_broken.mp3'
                 "{i}You call out for [vesta] again, and this time hear a crash in the next room.{/i}"
                 "{i}[Vesta] yelps, and you feel yourself twinge with sympathetic pain. Scrambling forward, you find her sprawled against the table, surrounded by pieces of broken glass from the mirror that toppled next to her.{/i}"
                 show pass fall 1
@@ -1468,16 +1469,16 @@ label start:
         show text "Programming by Tate Donnelly{p}{p}Art by Nathan Booth{p}{p}Original Music and Proofreading by Benny Klaiman{p}{p}Writing by Tate Donnelly and Nathan Booth" at truecenter with fade
         pause 10
         hide text with Dissolve(2.0)
-        show text "Jet Take Off and Fly By Sound Effect By SoundEffectsFactry{p}{p}Wind Sound Effect By Relaxing Sounds of Nature{p}{p}Rain Sound Effect by SleepDroid Studios Sleep Sounds" at truecenter with fade
+        show text "Radio Static - Sound Effect. YouTube, uploaded by Audio Library - Free Sound Effects, 1 Feb. 2016, https://www.youtube.com/watch?v=fo0G59aygu8.{p}{p}10 hours of hard rain on a metal roof (Rain Sleep Sounds) Rain Sounds for Sleeping. Rainfall.lluvia. YouTube, uploaded by SleepDroid Studios Sleep Sounds, 26 Mar. 2015, https://www.youtube.com/watch?v=s61TmfE3zY4.{p}{p}8 hours of train station sounds | train station sound effect and railway station sound. YouTube, uploaded by 8 Hours of, 6 Apr. 2015, https://www.youtube.com/watch?v=GRZ6rrpMoHs." at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "Thunder Sound Effect by arival0{p}{p}Hail Sound Effect By Free To Use Sounds{p}{p}Radio Static Sound Effect By Sound Effect By Audio Library{p}{p}Plane Crash Sound Effect by Sound Effect Database"  at truecenter with fade
+        show text "Heavy Rain Sounds at Night - Sleep, Study, Relax | Ambient Noise Rainstorm, @Ultizzz day#69. YouTube, uploaded by Ultimate Ambient Noise Soundzzz, 2 Jun. 2018, https://www.youtube.com/watch?v=XSL1HbrE3DE.{p}{p}Tibeauthetraveler - Ember (ft.eleven). YouTube, uploaded by Tibeauthetraveler, 6 Mar. 2021, https://www.youtube.com/watch?v=_libcjgqnog.{p}{p}Sounds For The Supermarket 1 (1975) - Grocery Store Music. YouTube, uploaded by TiHKAL MooN DWeLLeR, 20 Oct. 2020, https://www.youtube.com/watch?v=U-WzMovyzUA.{p}{p}Plane Crash - @Sound Effect. YouTube, uploaded by Sound Effect, 2 May 2020, https://www.youtube.com/watch?v=oEMUjsw2S74."  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "Ear Ringing Sound Effect By SFX and GFX{p}{p}Radio Static Sound Effect By Sound Effect By Audio Library{p}{p}Train Station Background Noise By"  at truecenter with fade
+        show text "Low Pitched Metal creaks and stress Groans. YouTube, uploaded by OroBolide8755, 6 Nov. 2018, https://www.youtube.com/watch?v=EWmuR-IDSi4.{p}{p}Ear Ringing Sound Effect - Free Download HD. YouTube, uploaded by SFX and GFX, 22 Aug. 2015, https://www.youtube.com/watch?v=rHTinEcgLn0.{p}{p}Heavy Hail Sound Effects. YouTube, uploaded by Free To Use Sounds, 17 Jun. 2020, https://www.youtube.com/watch?v=E0ArjfkbLLY."  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
-        show text "Metal Creak By OroBolide8755{p}{p}Mr.Lucky By Karl Jenkins{p}{p}Tibeauthetraveler By Ember (ft.eleven}"  at truecenter with fade
+        show text "Shop Door Bell. YouTube, uploaded by Sound FX Tracks, 20 Aug. 2020, https://www.youtube.com/watch?v=8yXqrRwkar8.{p}{p}Jet Take Off and Fly By Sound Effect. YouTube, uploaded by SoundEffectsFactory, 17 Jan. 2012, https://www.youtube.com/watch?v=OUNwFrt5IEQ.{p}{p}Oh no our table it's broken. YouTube, uploaded by luke2587I, 24 Apr. 2019, https://www.youtube.com/watch?v=pK4x9jIh5rA.{p}{p}Thunder Sound Effect. YouTube, uploaded by arival0, 8 Apr. 2017, https://www.youtube.com/watch?v=vJ08fwaLXwg."  at truecenter with fade
         pause 3
         hide text with Dissolve(2.0)
         show text "Down to Business (Title/Situational){p}{p}A Bright Future (Good Ending){p}{p}A \"Blight\" Future (Bad Ending){p}{p}by Benny Klaiman"  at truecenter with fade
