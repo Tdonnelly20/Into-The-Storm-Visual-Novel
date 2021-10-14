@@ -22,15 +22,17 @@ label start:
         python:
             protagName = renpy.input("What is your name?", length=32)
             protagName = protagName.strip()
+        transform cpSit:
+            xpos 0.2
+            ypos 0.1
+        transform flip:
+            xzoom -1
         transform thru_door:
             xpos .4
             ypos .1
             zoom .75
             xzoom 1
-        transform atChair:
-            xpos .27
-            ypos .1
-            xzoom -1
+
         label Variables:
             $ timer_range = 0
             $ timer_jump = 0
@@ -64,8 +66,6 @@ label start:
         Please choose a duration now."""
 
         menu:
-            "0 seconds.":
-                $ timeLimit=0.1
             "5 seconds.":
                 $ timeLimit=5
             "15 seconds.":
@@ -153,7 +153,7 @@ label start:
                 stop Radio
                 "You know, in times like these, if you’re always this indecisive, you’ll probably end up regretting it later."
             label choice1_end:
-                show pass coat i behind cp
+                show pass coat i at flip behind cp
             Passenger "Taxi!"
             Passenger "Can you take me to Viacaellum?"
 
@@ -185,14 +185,12 @@ label start:
             stop bg_noise
             hide pass
             hide cp
-            with dissolve
+            with fade
             scene rd front
-            show doma_station
-            show cp back behind doma_station
-            show pass qu sit n behind doma_station
-            pause 1
-            hide doma_station with Dissolve(1.0)
-            pause .5
+            show pass qu sit n at cpSit behind cp_backt
+            show cp_backt
+            show cp back behind pass
+            with fade
 
         label small_talk_scenes:
             label choice3:
@@ -212,14 +210,16 @@ label start:
                 "{i}You reach to turn on the radio, but [vesta] breaks the awkward silence before you can turn it on.{/i}"
                 show pass qu sit i
                 Passenger "Is traffic always this bad?"
+                show pass qu sit s
                 Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
                 "{i}She looks uncomfortable.{/i}"
                 jump choice3_end
             label friendly_small_talk_CS3:
                 $ friendship += 1
                 Pilot "So why are you heading to Viacaellum? Are you going on vacation?"
-                "{i}She pauses for a second, looking out the window.{/i}"
                 show pass qu sit t
+                "{i}She pauses for a second, looking out the window.{/i}"
+                show pass qu sit n
                 Passenger "Sort of, I really just had to get out of town."
                 Pilot "That’s fair. It’s good to get out of the city every once and a while."
                 "{i}A slightly awkward silence falls between you two.{/i}"
@@ -241,12 +241,13 @@ label start:
                         Pilot "Ah, you know, it’s alright, I guess. It’s what I know how to do, so I don’t really get the luxury of a choice."
                         jump job_talk_end
             label job_talk_end:
+                show pass qu sit t
                 "{i}She falls silent for a few minutes, watching buildings pass as you snake your way through Domatellium.{/i}"
-                show pass qu sit s
-                "{i}You reach to turn on the radio, thinking she is finished talking, but [vesta] breaks the awkward silence before you can turn it on.{/i}"
                 show pass qu sit i
+                "{i}You reach to turn on the radio, thinking she is finished talking, but [vesta] breaks the awkward silence before you can turn it on.{/i}"
                 Passenger "Is traffic always this bad?"
                 Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
+                show pass sit s
                 "{i}She looks uncomfortable.{/i}"
                 jump choice3_end
             label hostile_small_talk_CS3:
@@ -261,6 +262,7 @@ label start:
                 show pass qu sit i
                 Passenger "Is traffic always this bad?"
                 Pilot "Not really, I think there’s some event happening tomorrow, but I’m not sure."
+                show pass qu sit t
                 "{i}[Vesta] sighs heavily, turning back to the window.{/i}"
                 jump choice3_end
             label choice3_end:
@@ -270,16 +272,16 @@ label start:
                 play title "audio/mus_title.ogg" fadein 1.0
                 "{i}You turn on the radio to listen to some music.{/i}"
                 play sound 'audio/sfx_space-engine.mp3'
+                show pass qu sit n
                 "{i}The radio begins to play music and [vesta] seems to relax somewhat as you reach the city walls.{/i}"
                 stop background_music fadeout 5.0
 
         label talking_about_radio_scenes:
             "{i}Passing through the massive gate, you accelerate quickly, the city walls beginning to recede quickly in the background.{/i}"
             stop Radio
-            hide black with fade
             stop title
             play background_music "audio/mus_ambient.ogg" fadein 3.0
-            show pass qu sit i
+            show pass qu sit s
             stop sound fadeout 1.0
             "{i}The radio shuts off abruptly, startling [vesta].{/i}"
             Passenger "Why did the radio just shut off?"
@@ -300,7 +302,7 @@ label start:
                 Passenger "Oh, it just does that sometimes."
                 "{i}She shifts in her seat.{/i}"
                 Pilot "There's an open bunk for you below the ship."
-                hide pass qu sit s with fade
+                hide pass qu sit s with dissolve
                 "{i}Still looking uncomfortable, [vesta] heads down below.{/i}"
                 jump choice4_end
             label friendly_4:
@@ -316,7 +318,7 @@ label start:
                 Pilot "That explains it then. Most people who never leave the city wouldn't know about it."
                 Pilot "You should head down below now and start setting up a bunk, though. There’s an empty wardrobe and a bunk bed that's yours until we get to Viacaellum."
                 "{i}She nods and makes her way down the ladder, clearly shaken but glad to have a task.{/i}"
-                hide pass qu sit n with fade
+                hide pass qu sit n with dissolve
                 "{i}You listen to her footsteps recede until the sound is overcome by the noise of the engines before turning your focus back to the open road.{/i}"
             jump choice4_end
             label hostile_4:
@@ -328,7 +330,7 @@ label start:
                 Pilot "Huh, that's weird. I can't imagine staying in the same place my whole life."
                 "{i}She glares at you, clearly frustrated.{/i}"
                 Pilot "Anyways, there’s an open bunk down below for you. You should go set up."
-                hide pass qu sit i with fade
+                hide pass qu sit i with dissolve
                 "{i}[Vesta] gets up and heads down below, clearly happy to get away from your conversation.{/i}"
                 "{i}You drive alone for a few hours.{/i}"
                 jump choice4_end
@@ -336,6 +338,7 @@ label start:
 
             hide pass
             hide cp
+            hide cp_backt
             with dissolve
             scene black
             show pass qu sit n at sitAtTable
@@ -349,9 +352,9 @@ label start:
     label Act2:
         label Storm_Waring_Scene:
             transform sitAtTable:
-                xpos .4
-                ypos .1
-                zoom 1.5
+                xpos .26
+                ypos -.05
+                zoom 2
                 xzoom -1.0
             "{i}[Vesta] looks to you nervously, picking absentmindedly at the seat of her chair. The radio comes back on, startling her.{/i}"
             play Radio 'audio/amb-sfx_radio-static.mp3'
@@ -371,7 +374,7 @@ label start:
                     Pilot "I think we'll be fine, but do you want to turn back?"
                     if friendship >= 0:
                         "{i}She shakes her head.{/i}"
-                        show pass qu sit t at sitAtTable behind table2t
+                        show pass qu sit n at sitAtTable behind table2t
                         Passenger "If you think we'll be fine, let's keep going."
                         Pilot "Sounds good, but I will have to refuel if we’re gonna make it to Viacaellum."
                         Pilot "It’ll take an hour or so, but there’s a counter there if you’d like to grab a bite."
@@ -413,9 +416,9 @@ label start:
             transform atDoor:
                 zoom .35
                 ypos .7
-            show pass std n at bottomRight with fade
+            show pass std n at bottomRight with dissolve
             Passenger "I'm going to go get something to eat."
-            show pass std i at atDoor with fade
+            show pass std i at atDoor with dissolve
             "{i}You nod and begin the apparatus’ refueling process. When you turn to head inside the building, you see [vesta] still standing outside.{/i}"
             "{i}She glances back at you before opening the door, the anxiety of entering an unfamiliar place clearly giving her some pause.{/i}"
             label wave:
@@ -436,24 +439,30 @@ label start:
                 "{i}Nevertheless, she squares them again, pushing on the door, crossing the threshold, and giving you a glimpse of the empty counter.{/i}"
                 jump enter
             label enter:
-                hide pass with fade
+                hide pass with dissolve
             stop background_music fadeout 2.0
 
             play background_music 'audio/mus_gas-station.ogg' fadein 3.0
             "{i}A second later, you enter the station, greeted by the familiar crackle of the radio.{/i}"
             play sound 'audio/sfx_jingle.mp3'
-            scene int_rfstation c
+
             transform lower:
-                xpos 0.2
+                xpos 0.1
                 ypos 0.3
 
             transform bottomRight:
-                xpos 0.5
+                xpos 0.4
                 ypos 0.4
+            transform sitAtBar:
+                xpos 0.4
+                ypos 0.32
+                xzoom -1
+
+            scene int_rfstation c
             show rs clerk n at lower
-            show pass std n at bottomRight
-            show ext_rfstation
-            hide ext_rfstation with fade
+            show pass qu sit t at sitAtBar
+            show bartop
+            with dissolve
 
             pause 0.5
             play Radio 'audio/amb-sfx_radio-static.mp3'
@@ -461,6 +470,9 @@ label start:
             Radio "While this campaign has been somewhat polarizing over the past several weeks, it appears that the mayor’s supporters, or “neighbors,” as they call themselves, are attempting to change that view with citywide celebrations."
             Radio "We go live to one of our reporters on the scene…"
             stop Radio
+            transform stand:
+                xpos .55
+                xzoom 1
             label choice5:
                 $ timer_jump = 'menu_neutral5'
             show screen countdown
@@ -477,10 +489,12 @@ label start:
                 jump Hear_About_Gatherings
             label conversation_with_attendant:
                 Passenger "Can you turn that off?"
+                show rs clerk t
                 Attendant "Gladly, I can't stand that crap."
+                show rs clerk n
                 "{i}[Nell] switches the radio off and looks up as the bell rings with a smile.{/i}"
                 Attendant "Hey, [Pilot]! Where’ve you been? You haven’t stopped by in a while."
-                Pilot "Ah, you know how piloting is, Nell. I don’t exactly get to chose where I go."
+                Pilot "Ah, you know how piloting is, Nell. I don’t exactly get to choose where I go."
                 $ nameNell ='Nell'
                 $ nameNellU ='Nell'
                 $ nameNellL='Nell'
@@ -490,9 +504,6 @@ label start:
                 jump Fell_Apart
             label Hear_About_Gatherings:
                 "{i}You give [nell] who stands behind the counter a wave as you enter silently taking a seat and focusing on the radio.{/i}"
-                hide pass
-                hide rs
-                with dissolve
                 scene int_rfstation r with Dissolve(1.0)
                 pause .5
                 "{i}Faint cheering erupts from the radio’s background when the news station switches to the reporter at the gatherings.{/i}"
@@ -514,11 +525,14 @@ label start:
                 Radio "Well, there you have it, folks, you’ll find a few lively characters down here, but all in all, it seems their message is one of--"
                 Nell "With all due respect, I’ve gotta turn this crap off."
                 scene int_rfstation c
-                show rs clerk n at lower
-                show pass std n at bottomRight
+                show rs clerk n at lower behind bartop
+                show pass qu sit t at bottomRight, flip
+                show bartop
+
                 stop Radio
                 "{i}[Nell] goes back to cleaning the area behind the counter, and an awkward silence fills the space.{/i}"
                 "{i}[Vesta] finishes her meal, pushing her plate away from her.{/i}"
+                show bartop behind pass
                 show pass std i at bottomRight
                 Passenger "How much longer will we have to wait?"
                 Pilot "It should be done now, actually."
@@ -542,7 +556,6 @@ label start:
                     jump choice5_end
                 label attendant_monologue:
                     Pilot "What do you mean fell apart?"
-                    show pass std t at bottomRight
                     Attendant "What do you think I mean?"
                     show rs clerk t at lower
                     Attendant "Terraforming halted nearly a century ago. Haven’t you looked outside? The roads between our cities are a half-day of radiation away from crumbling to dust."
@@ -556,30 +569,35 @@ label start:
 
                     Damnit, I’m starting to sound as preachy as that awful mayor.
                     """
+                    show rs clerk n at lower
                     "{i}Nell sets down the glass she had been violently drying.{/i}"
                     Attendant """
                     Point being, some pundit got elected that promised change. Tried forcing the engineers to find solutions that didn’t exist, to make the machines work with the wrong materials.
 
                     My grandma got fired then, so I don’t know what happened. She knew it was fruitless, and I guess now I’m in the same position.
                     """
+                    show rs clerk t at lower
                     "{i}Nell laughs at herself, picking up another glass and going back to drying.{/i}"
                     Attendant "’Cept here I am, drying glasses in a run-down refueling station."
                     show rs clerk n at lower
                     "{i}You look over at [vesta], who’s staring at Nell with a look you can’t quite place.{/i}"
-                    show pass std n at bottomRight
+
+
+                    show pass std n at bottomRight, stand
                     "{i}[Vesta] finishes her meal, pushing her plate away from her.{/i}"
-                    show pass std i at bottomRight
+                    show pass std i at bottomRight, stand
                     Passenger "How much longer will we have to wait?"
                     Pilot "It should be done now, actually."
                     Passenger "Oh! So we could leave soon?"
                     Pilot "I mean, yes."
-                    show rs clerk t at lower
+                    show rs clerk n at lower
                     "{i}Nell watches [vesta] keenly, noting her sudden hurry to leave.{/i}"
-                    show pass std n at bottomRight
+
+                    show pass std n at bottomRight, stand
                     "{i}[Vesta] stands and makes a motion to begin walking for the exit but stops herself.{/i}"
                     Passenger "Oh, and also, I wanted to say thanks, I guess. It was…"
                     "{i}She trails off, clearly unable to find the words to express what she means. Turning quickly, [vesta] leaves as if chased by her unfinished sentence.{/i}"
-                    hide pass with fade
+                    hide pass with dissolve
                     Attendant "She’s a weird one, huh?"
                     menu:
                         "I guess.":
@@ -593,6 +611,7 @@ label start:
                     jump choice5_end
                 label hopeful_on_nationalism:
                     Pilot "Isn’t it possible that this could head in a good direction? The speeches I’ve heard on the radio seem like they’ve got some good points. I even heard them talk about starting terraforming again."
+                    show rs clerk t
                     Nell "What are you even talking about?"
                     Pilot "I’m just saying that they’re at least {i}trying{/i} to find solutions."
                     Attendant """
@@ -605,23 +624,22 @@ label start:
                     Pilot "But that’s exactly what I’m saying! The mayor wants to try and actually fix things! In the speeches--"
                     Attendant "In the speeches! Of course! The speeches where they spout rhetoric and empty promises without a single concrete policy to back it up! I swear--"
 
-                    show pass std i at bottomRight
+                    show pass std i at bottomRight, stand
                     "{i}Before Nell can work herself up to a full-on rant, [vesta] interupts her, pushes her plate away from her.{/i}"
                     Passenger "How much longer will we have to wait?"
+                    show rs clerk n
                     Pilot "It should be done now, actually."
                     Passenger "So we can leave?"
                     Pilot "I mean, yes."
-                    show pass std n at bottomRight
+                    show pass std n at bottomRight, stand
                     Passenger "So..."
                     Pilot "Oh, alright."
                     "{i}You get to your feet, waving goodbye to Nell as you exit. Nell simply looks away, shaking her head.{/i}"
                     jump choice5_end
             label choice5_end:
                 scene ext_rfstation
-                show pass std n at bottomRight
-                show int_rfstation c
-                hide int_rfstation c with Dissolve(1.0)
-                pause 0.7
+                show pass std n at bottomRight, stand
+                with dissolve
                 stop music fadeout 1.0
                 "{i}You follow [vesta] as she walks hurriedly to the ship, needing to jog a few steps to catch up to her.{/i}"
                 #Max nationalist_points is 3
@@ -665,7 +683,7 @@ label start:
                 Pilot "Well, we need to try something! It’s not like the alternative is going to try and make things better."
                 Pilot "It seems like the current governor is too busy sending window washers to polish the inside of Domatellium’s walls to try and fix the outside!"
                 "{i}Your conversation falls into an awkward silence.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 "{i}When you get to the ship, [vesta] heads down to the bunks without saying anything.{/i}"
                 jump choice6_end
             label anti_history_conversation:
@@ -676,12 +694,12 @@ label start:
                 Passenger "I can’t keep myself from thinking that this whole situation is going to get worse, you know?"
                 Passenger "I mean, people haven’t talked about terraforming in decades, and all of a sudden, it’s this huge issue that everyone’s so...{i}angry{/i} about."
                 Passenger "I don’t know, though. They never seemed that angry to me."
-                hide pass with fade
+                hide pass with dissolve
                 "{i}Before you can respond, however, [vesta] climbs inside your ship, clearly ending the conversation.{/i}"
                 jump choice6_end
             label awkward_walk_back:
                 "{i}You and [vesta] walk back to the ship in awkward silence.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 "{i}When you reach the entrance of the ship, you open your mouth, unsure of what to say, but [vesta] climbs inside before you can say anything.{/i}"
                 jump choice6_end
             label dont_want_to_talk_about_it:
@@ -689,7 +707,7 @@ label start:
                 Passenger "Sorry, [protagName]. I just really don’t want to talk about it."
                 Pilot "Alright, we don’t have to talk about it then."
                 "{i}The two of you walk silently back to the ship.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 jump choice6_end
             label dont_need_to_tell_you:
                 Pilot "Why do you want to leave so badly?"
@@ -697,7 +715,7 @@ label start:
                 "{i}[Vesta] looks angry and a little frightened, clearly unable to talk to you at the moment.{/i}"
                 Pilot "Alright, alright."
                 "{i}You both walk the rest of the way back to the ship in silence.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 "{i}When you reach it, [vesta] stomps below deck without another word to you.{/i}"
                 jump choice6_end
             label conversation_about_leaving_station:
@@ -710,7 +728,7 @@ label start:
                 Passenger "But I'd rather not talk about it."
                 Pilot "Alright, we don’t have to."
                 "{i}The two of you walk silently back to the ship.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 jump choice6_end
             label conversation_about_gatherings:
                 Pilot "What do you think about the gatherings?"
@@ -723,7 +741,7 @@ label start:
                         $ nationalist_points += 1
                         Pilot "I don’t think that’s true. I’m sure there are a couple who are like that, but it really just seems like a group passionate about change for the better."
                         Passenger "What do you even know? You think you can make a judgment on it based on a couple of radio broadcasts."
-                        hide pass with fade
+                        hide pass with dissolve
                         "{i}[Vesta] climbs inside the ship before you can respond, her jaw set with frustration.{/i}"
                     "You're right.":
                         $ nationalist_points -= 1
@@ -731,7 +749,7 @@ label start:
                         Passenger "And on top of it all, everyone acts so weird if you try to question the neighbor’s message. I can’t even tell if they really all believe it or if people are just too scared of being the odd one out to disagree."
                         Passenger "I remember how weird everyone acted when I started looking into what people were saying back when…"
                         Passenger "Nevermind."
-                        hide pass with fade
+                        hide pass with dissolve
                         "{i}[Vesta] climbs into your ship before you can ask what she meant, clearly done with the conversation.{/i}"
                 jump choice6_end
             label choice6_end:
@@ -749,10 +767,17 @@ label start:
             hide cp front with Dissolve(1.0)
             show kn table2 with Dissolve(1.0)
             "{i}As you’re walking to the bunks, you hear muffled sobbing.{/i}"
-            show kn thru_door
-            show pass qu sit a at thru_door behind kn_thru_doort
-            show kn_thru_doort
-            with Dissolve(1.0)
+            transform atChair:
+                xpos .27
+                ypos .14
+                xzoom -1.00
+            show sit_2chair
+            transform crySit:
+                xpos .15
+                ypos .24
+            show pass cr sit s at crySit
+            with Dissolve(2.0)
+            #pause
             pause .5
             "{i}You poke your head in the doorway of the sitting room and see [vesta]. She’s curled up in one of the chairs with her head in her hands, apparently not having noticed you yet.{/i}"
             label choice7:
@@ -778,16 +803,8 @@ label start:
                 show black with Dissolve(2.0)
                 jump choice7_end
             label meaningful_conversation_about_past:
-                hide kn thru_door
-                hide kn_thru_doort
-                hide pass
-                with Dissolve(1.0)
-                show sit_2chair
-                show pass qu sit s at atChair
-                with Dissolve(2.0)
                 "{i}You knock lightly on the door and step into the room.{/i}"
                 Pilot "Hey, are you alright?"
-                show pass qu sit s at atChair
                 "{i}[Vesta] shakes her head, not looking up at you. Her body is shaking as she tries to choke back her sobs.{/i}"
                 Pilot "What's wrong?"
                 Passenger "What...what if I’m making the wrong choice?"
@@ -868,9 +885,8 @@ label start:
                         Passenger "I’m sorry. I just…"
                         Passenger "I need to be alone right now. I can’t deal with this."
                         Pilot "Oh. Yeah, for sure."
-                        show kn thru_door behind pass
-                        show pass qu sit a at thru_door
-                        show kn_thru_doort
+                        #TODO show doorway
+                        show pass qu sit a
                         with Dissolve(1.0)
                         "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at [vesta], wishing you knew how to help her.{/i}"
                         "{i}Closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
@@ -915,12 +931,8 @@ label start:
                     "{i}You nod stepping out of the small room and closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
                     jump choice7_end
             label combative_conversation_about_relationship_with_passenger:
-                hide kn thru_door
-                hide pass
-                hide kn_thru_doort
-                with Dissolve(1.0)
-                show sit_2chair
-                show pass cr sit a at atChair
+                #TODO Hide doorway
+                show pass std i
                 with Dissolve(2.0)
                 "{i}You knock lightly on the door and step into the room.{/i}"
                 Pilot "Hey, are you alright?"
@@ -930,13 +942,7 @@ label start:
                 Pilot "Sorry, I was just--"
                 Passenger "I said, get the fuck out! I don’t want to talk to {i}you!{/i}"
                 Pilot "Ok! I’m leaving!"
-                hide sit_2chair
-                hide pass
-
-                show kn thru_door
-                show kn_thru_doort
-                show pass std i behind kn_thru_doort
-                with fade
+                #TODO Show doorway
                 "{i}You go to close the door, but [vesta] gets to her feet.{/i}"
                 Passenger "Why did you even come in here? You’ve been nothing but rude to me since we started driving. What did I even do to you?"
 
@@ -953,12 +959,12 @@ label start:
                 "{i}She storms towards you, and you take a reflexive step back, removing your hand from the door handle.{/i}"
 
                 show black
-                hide pass
-                hide kn thru_door
-                hide kn_thru_doort
                 "{i}She reaches the doorway and slams it shut, causing a bang that echoes around the ship for a few moments.{/i}"
+
+                scene rd front
                 show cp front behind black
-                hide black with fade
+                hide black
+                with fade
                 "{i}You return to the cockpit, a little unsure of what to do with yourself.{/i}"
                 jump choice7_end
             label choice7_end:
@@ -968,10 +974,12 @@ label start:
             show black with fade
             scene rd front
             show cp back
-            show pass qu sit n
+            show pass qu sit n at cpSit
+            show cp_backt
             show black
             pause .5
             hide black with fade
+
             "{i}[Vesta] joins you in the cockpit the next morning, sitting sullenly with dark circles under her eyes.{/i}"
             "{i}She stares out the window absentmindedly, clearly uninterested in maintaining a conversation.{/i}"
             "{i}A few hours later, you break the heavy silence with some trepidation.{/i}"
@@ -1012,6 +1020,7 @@ label start:
             label weatherLie_end:
                 hide pass
                 hide cp
+                hide cp_backt
                 with fade
 
             show kn table2 with fade
@@ -1047,7 +1056,7 @@ label start:
                     """
                     "{i}[Vesta] reaches down and turns the dial violently, switching the radio to static.{/i}"
                     "{i}Clearly quite shaken by the news, [vesta] hastily throws her coat on and smashes her helmet on over her head before rushing outside.{/i}"
-                    hide pass with fade
+                    hide pass with dissolve
             label radioChoice:
                 $ timer_jump = 'menu_radioChoice_neutral'
                 show screen countdown
@@ -1197,6 +1206,7 @@ label start:
                 hide screen countdown
                 scene rd front
                 show kn table2
+
                 show pass qu sit n at sitAtTable
                 show table2t
                 with fade
@@ -1315,7 +1325,7 @@ label start:
                 "{i}Your voice is nearly drowned out by a peal of thunder, and you find yourself gasping for breath, creating a cloud of mist in the freezing air.{/i}"
                 Pilot "We need to find our helmets! I think there’s a hole somewhere in the ship, and the air is going to become unbreathable within the next few minutes!"
                 "{i}[Vesta] nods, trudging unsteadily through the rising water to the desk in the next room.{/i}"
-                hide pass with fade
+                hide pass with dissolve
                 "{i}You begin to fumble around in the darkness, searching desperately for your helmet.{/i}"
                 Passenger "I found it!"
                 show pass fall h1 with fade
@@ -1329,7 +1339,7 @@ label start:
                 Passenger "I...I think so."
                 "{i}[Vesta] looks around, confused as if trying to remember where she put it.{/i}"
                 Passenger "It...it’s on-n t-t-top of my bunk!"
-                hide pass with fade
+                hide pass with dissolve
                 "{i}Without you saying anything, [vesta] clambers into the next room, doing her best to avoid the nearly mid-thigh high water despite her violent shivering.{/i}"
                 "{i}You reach out for the ladder to the cockpit, clambering shakily up its rungs to the dry safety.{/i}"
                 scene rd storm
@@ -1359,7 +1369,7 @@ label start:
                 label pass_helps_outside:
                     Pilot "I...maybe. If we could, it would let us divert heat to the cockpit as it wouldn’t be immediately lost trying to keep the engine from entirely freezing over."
                     Pilot "There’s an emergency welder and scrap metal down below, but going out in this storm is too dangerous. And besides--"
-                    hide pass with fade
+                    hide pass with dissolve
                     "{i}Before you can finish, [vesta] is gone, climbing down the ladder.{/i}"
                     Passenger "Where is it-t?"
                     menu:
@@ -1388,17 +1398,90 @@ label start:
                             "{i}Following your commands, [vesta] redirects the heat, and you feel warm air fill the room as the atmosphere is filtered out, your breathing slowly becoming less shaky and strained.{/i}"
                             "{i}As the heat washes over you, you feel yourself begin to fall into unconsciousness, your body struggling to maintain heat.{/i}"
                             "{i}As your eyes close, you see [vesta] sink to the floor as well, unable to continue to function.{/i}"
-                            #TODO A classy transition and wake-up scene
                             jump aftermath
                         "{i}Tell her to come back.{/i}":
+                            Pilot "It’s not worth it! You’re more likely to be killed by the storm than waiting for help."
+                            "{i}[vesta] climbs back up the ladder.{/i}"
+                            Passenger "You’re sure we can’t fix it? I know how to use these tools!"
                             jump pass_helps_inside
                 label pass_helps_inside:
-                    #TODO pass help inside
+                    Pilot "I...I don’t think so. At this point, the only thing we can do is call for help."
+                    "{i}[vesta]’s face pales even more, but she nods.{/i}"
+                    Passenger "Ok, how do we do that?"
+                    "{i}You scan the cockpit, and your eyes land on the emergency radio. You grab it, clutching it to your chest like it’s your lifeline.{/i}"
+                    Pilot "We’re going to have to stay here. It’s the highest part of the ship, and we should be able to seal it off from the rest of the ship."
+                    Pilot "Unfortunately, the heating probably won’t function while we’re up here. It’s designed to heat the coldest place, and provided another hole doesn’t get put in the cockpit, it should stay at least a little warmer."
+                    "{i}[vesta] nods, shivering hard. She pulls her coat tighter around herself, leaning against the wall for support.{/i}"
+                    Passenger "S-s-o what next?"
+                    "{i}You look down at the radio, checking it for damage.{/i}"
+                    Pilot "Shit!"
+                    Passenger "What is it? Is it broken?"
+                    "{i}You shake your head, having noticed the power cable, which should have attached to a spool inside the cockpit, had been severed, the wires frayed and ripped.{/i}"
+                    Pilot "The power cable is severed, which means we won’t be able to send or receive messages without manual power."
+                    Passenger "M-manual p-p-power?"
+                    "{i}You gesture to the crank built onto the side of the radio.{/i}"
+                    Pilot "It’s incredibly archaic, but it should work."
+                    play Radio 'audio/amb-sfx_radio-static.mp3'
+                    "{i}You spin the crank, the muscles in your arm protesting with every rotation. After a few seconds, lights begin to glow dimly, and a faint crackle emanates from the speakers.{/i}"
+                    Pilot "Mayday! Mayday! [protagName] to Viacaellum, come in Viacaellum!"
+                    Pilot "My ship crashed right outside of your city."
+                    "{i}You rattle off your last known coordinates.{/i}"
+                    Pilot "Please send help! The ship’s flooding fast and we’ve lost heat. "
+                    "{i}You feel yourself begin to fall into unconsciousness, your body struggling to maintain heat. {/i}"
+                    Pilot "P-please! Viacaellum come in!"
+                    "{i}You continue to repeat the message, desperate for a reply.{/i}"
+                    "{i}Just as your body feels ready to give out, the crackle spikes, and you hear garbled words over the whir of the crank.{/i}"
+                    Radio "We copy [protagName], we will send a rescue vehicle to those coordinates once the storm has cleared enough to ensure safe travel. Over."
+                    "{i}As your eyes close, you see [vesta] sink to the floor as well, unable to continue to function.{/i}"
+
                     jump aftermath
             label pass_refuses_to_help:
-                #TODO pass refuses to help
-                "TBD PASSENGER REFUSES TO HELP."
-                "TBD YOU FIX THE SHIP'S LEAK."
+                "{i}You call out for [vesta] again, and this time hear a crash in the next room.{/i}"
+                "{i}[Vesta] yelps, and you feel yourself twinge with sympathetic pain. Scrambling forward, you find her sprawled against the table, surrounded by pieces of broken glass from the mirror that toppled next to her.{/i}"
+                show pass fall 1
+                "{i}You reach out, managing to pull her into the kitchen and feel the pressure of the water around your knees, lapping at the tops of your boots as if desperate to poor in.{/i}"
+                "{i}[Vesta] looks around, finally seeming to comprehend that things are not as they should be.{/i}"
+                Passenger "What the hell happened?!"
+                "{i}She yells this, her eyes frantic as she attempts to make anything out in the dim emergency lights{/i}"
+                play sound 'audio/sfx_thunder.mp3'
+                Pilot "We crashed! The ship got hit by one of the largest gusts I’ve ever experienced!"
+                "{i}Your voice is nearly drowned out by a peal of thunder, and you find yourself gasping for breath, creating a cloud of mist in the freezing air.{/i}"
+                Passenger "You said we could make it to Viacaellum before the storm hits!"
+                "{i}[vesta] is glaring at you, her face tinged with red, whether from anger or cold you aren’t sure.{/i}"
+                Pilot "Look, we have bigger things to deal with here!"
+                Pilot "We need to find our helmets! I think there’s a hole somewhere in the ship, and the air is going to become unbreathable within the next few minutes!"
+                "{i}[Vesta] nods, stomping through the rising water to the desk in the next room.{/i}"
+                hide pass with dissolve
+                "{i}You begin to fumble around in the darkness, searching desperately for your helmet.{/i}"
+                Passenger "I found it!"
+                "{i}Minutes pass, and you find yourself beginning to cough, the air growing steadily thicker as your search becomes more frantic.{/i}"
+                "{i}You look down and realize that your fingers are faintly blue in the dim emergency lights.{/i}"
+                "{i}As you search, you realize you’re shaking, water having seeped under the coat and pants of your suit while you were unconscious.{/i}"
+                "{i}After what feels like a lifetime, you find your helmet and stuff it on.{/i}"
+                "{i}It takes a few minutes, but your head begins to clear, and you frantically start to look for the source of the leak.{/i}"
+                "{i}Your heart sinks when you see a gash a few feet long that rain is pouring into. You know your hands are too numb and shaking too hard to weld that gash shut.{/i}"
+                "{i}You give up on fixing the leak, and instead make your way to the cockpit of the ship.{/i}"
+                "{i}Searching desperately for the emergency radio, you find it on the ground in the corner of the cockpit, its power cable severed.{/i}"
+                "{i}Looking it over desperately for any other signs of damage, you find none, and hastily fold out the hand crank, your hands shaking as you attempt to grasp the handle.{/i}"
+                "{i}You spin the crank, the muscles in your arm protesting with every rotation. After a few seconds, lights begin to glow dimly, and a faint crackle emanates from the speakers.{/i}"
+                Pilot "Mayday! Mayday! [protagName] to Viacaellum, come in Viacaellum!"
+                "{i}The storm is so loud that you can barely hear the radio static, but in the back of your mind you think you could hear a soft click on the other end.{/i}"
+                Pilot "SOS! I repeat, SOS! My ship has crash-landed outside of your city, please send help!"
+                "{i}You hurriedly look over to your coord system, but the screen is dark and cracked, the emergency power too weak to keep it operational.{/i}"
+                "{i}You feel your eyes beginning to get heavy, and you clutch the radio to your chest as you crawl to the hatch of the cockpit, calling down into the rest of the ship.{/i}"
+                Pilot "Come to the cockpit! It’s the only place we have a chance of surviving the storm!"
+                "{i}You yell to [vesta].{/i}"
+                "{i}You lose your footing and crash into the floor, sliding down to the opposite end of the cockpit.{/i}"
+                "{i}Dazed and freezing against the cold metal, you wrap your coat tighter around yourself, hoping your body heat will be enough to warm the sodden clothes underneath.{/i}"
+                show pass std i with dissolve
+                "{i}After what feels like an eternity, you see [vesta] struggle up the tilted ladder in the cockpit, wincing with every rung.{/i}"
+                Passenger "How could you do this?"
+                "{i}She seems delirious, but the anger in her voice is palpable.{/i}"
+                Passenger "You said we’d make it. You risked not just your life, but also mine!"
+                Passenger "What were you thinking? Why did you let this happen?"
+                "{i}You open your mouth to protest.{/i}"
+                "{i}You feel your body give up and you collapse on the floor.{/i}"
+                "{i}As you close your eyes, the last thing you see is the radio.{/i}"
                 jump aftermath
             label aftermath:
                 show black with fade
@@ -1412,11 +1495,12 @@ label start:
                 else:
                     play background_music "audio/mus_ambient.ogg" fadein 5.0
                 hide black with fade
-                "TBD AFTER THE STORM PASSES YOU'RE ABLE TO RADIO A TRANSPORT TO PICK YOU UP."
-
+                "{i}You wake up to a looping radio message.{/i}"
+                Radio "Distress call heard. Please evacuate the vehicle."
+                "{i}Looking around, you don't see [vesta].{/i}"
         label ending:
             stop music
-            "{i}You go out to where [vesta] is.{/i}"
+            "{i}Eventually, you make your way outside and find [vesta].{/i}"
             scene rd front
             if friendship > 1:
                 show pass std t
