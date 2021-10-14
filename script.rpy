@@ -773,11 +773,13 @@ label start:
                 xzoom -1.00
             show sit_2chair
             transform crySit:
-                xpos .15
-                ypos .24
-            show pass cr sit s at crySit
+                xpos .05
+
+                zoom 1.5
+            show pass cr sit s at crySit behind chairArm
+            show chairarm
             with Dissolve(2.0)
-            #pause
+            pause
             pause .5
             "{i}You poke your head in the doorway of the sitting room and see [vesta]. She’s curled up in one of the chairs with her head in her hands, apparently not having noticed you yet.{/i}"
             label choice7:
@@ -809,6 +811,16 @@ label start:
                 Pilot "What's wrong?"
                 Passenger "What...what if I’m making the wrong choice?"
                 Pilot "What do you mean? Wrong choice?"
+                transform scared:
+                    xpos .13
+                    ypos .24
+                    zoom 1.2
+                transform oops:
+                    xpos 0.05
+                    ypos .02
+                    zoom 1.5
+                show pass qu sit s at scared
+                pause
                 Passenger "Leaving! If I go through with this, what if I can’t go back? I can’t make this choice now. I...oh God. How could I be this stupid?"
                 "{i}You kneel down next to her, not totally sure what to do.{/i}"
                 label convo1:
@@ -820,8 +832,8 @@ label start:
                             $ friendship -= 1
                             hide screen countdown
                             Pilot "We all make mistakes sometimes. When we get to Viacaellum, I’m sure you’ll be able to find someone who’ll drive you back once the storm has passed."
-                            show pass qu sit a
                             Passenger "That’s not- that’s not what I meant!"
+                            show pass cr sit s at oops behind chairArm
                             "{i}She clenches her fists, her whole body tensing with another sob.{/i}"
                             Passenger "I just…"
                             Passenger "What if things go bad? What if I’ve left and something gets instated, and it means I can’t go back!"
@@ -838,6 +850,7 @@ label start:
                                         "{i}After what feels like an eternity, her voice, tiny and thin, makes its way out from between her clenched teeth.{/i}"
                                         Passenger "I need you to leave."
                                         Passenger "I’m sorry. I just…"
+                                        show pass qu sit s at scared
                                         Passenger "I need to be alone right now. I can’t deal with this."
                                         Pilot "Oh. Yeah, for sure."
                                         "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at [vesta], wishing you knew how to help her.{/i}"
@@ -851,6 +864,7 @@ label start:
                                         "{i}A second later, you find your arms wrapped around her as she hangs on to your torso, her sobs shaking both of you.{/i}"
                                         "{i}Moments pass, and [vesta] seems to gain control of herself, pulling back with an ashamed look on her face.{/i}"
                                         Passenger "I..."
+                                        show pass qu sit s at scared
                                         Passenger "I’m sorry. That was so inappropriate."
                                         "{i}You sit back, still not totally sure what to say.{/i}"
                                         jump explain_past
@@ -860,6 +874,7 @@ label start:
                                     "{i}After what feels like an eternity, her voice, tiny and thin, makes its way out from between her clenched teeth.{/i}"
                                     Passenger "I need you to leave."
                                     Passenger "I’m sorry. I just…"
+                                    show pass qu sit s at scared
                                     Passenger "I need to be alone right now. I can’t deal with this."
                                     Pilot "Oh. Yeah, for sure."
                                     "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at [vesta], wishing you knew how to help her.{/i}"
@@ -869,12 +884,16 @@ label start:
                             hide screen countdown
                             $ friendship += 2
                             Pilot "I don’t think leaving was stupid."
+                            show pass qu sit s at scared
                             "{i}[Vesta] looks up at you, and she seems to tremble just a little less for a second.{/i}"
                             Pilot "Why... Do you think it was stupid? "
+                            show pass cr sit s  at oops behind chairArm
                             "{i}She looks away again, her face contorted into one of anguish.{/i}"
+
                             Passenger " I...I’ve made mistakes. So, so, so many."
                             "{i}She takes a moment to let the tears in her eyes subsided.{/i}"
                             Passenger "And now...I don’t know that I can go back. I’m so...terrified. I’m terrified that, by leaving, I’ve fucked everything up and…"
+                            show pass qu sit s at scared
                             "{i}Trailing off, [vesta] looks back at you.{/i}"
                             jump explain_past
                     label convo1_neutral:
@@ -883,10 +902,10 @@ label start:
                         "{i}After what feels like an eternity, her voice, tiny and thin, makes its way out from between her clenched teeth.{/i}"
                         Passenger "I need you to leave."
                         Passenger "I’m sorry. I just…"
+                        show pass qu sit s at scared
                         Passenger "I need to be alone right now. I can’t deal with this."
                         Pilot "Oh. Yeah, for sure."
                         #TODO show doorway
-                        show pass qu sit a
                         with Dissolve(1.0)
                         "{i}You get up and walk quietly to the door, turning just before you shut it to take another look back at [vesta], wishing you knew how to help her.{/i}"
                         "{i}Closing the door behind you, you take a seat on your bunk, drained and unsure of what to do next.{/i}"
@@ -907,8 +926,10 @@ label start:
 
                     So when I heard about a group that wanted to start terraforming again, I thought they might be good people...
                     """
+                    show pass cr sit s at oops behind chairArm
                     "{i}[Vesta] trails off, wiping at her eyes.{/i}"
                     Pilot "But?"
+                    show pass qu sit s at scared
                     Passenger "But...but I was too blinded by my hope that I missed what was really happening."
                     "{i}She makes direct eye contact with you as if pleading for you to understand.{/i}"
                     Passenger """
@@ -920,6 +941,7 @@ label start:
 
                     I…
                     """
+                    show pass cr sit s at oops behind chairArm
                     "{i}Putting her face in her hands, [vesta] lets out another sob, this one deep and guttural.{/i}"
                     Passenger """
                     I don’t even remember what happened, exactly.
@@ -936,6 +958,7 @@ label start:
                 with Dissolve(2.0)
                 "{i}You knock lightly on the door and step into the room.{/i}"
                 Pilot "Hey, are you alright?"
+                show pass qu sit i at scared
                 "{i}[Vesta] glares daggers at you, tears streaming down her red face.{/i}"
                 Passenger "Get out."
                 "{i}She says the words through clenched teeth.{/i}"
@@ -1480,13 +1503,20 @@ label start:
                 Passenger "You said we’d make it. You risked not just your life, but also mine!"
                 Passenger "What were you thinking? Why did you let this happen?"
                 "{i}You open your mouth to protest.{/i}"
-                "{i}You feel your body give up and you collapse on the floor.{/i}"
+                Passenger "You were supposed to know what was safe! You were supposed to know when we had to turn around."
+                Passenger "I couldn’t have known what was safe! I didn’t even know the journey would take longer using this {i}awful{/i} thing rather than a transport!"
+                "{i}She kicks the wall of the cockpit weakly, sinking to the floor with a look of despair.{/i}"
+                Passenger "I...{i}trusted{/i} you to do this right. We should’ve just turned back."
+                "{i}She hugs her torso, reflexively trying to keep from losing more heat.{/i}"
+                Passenger "And you knew that this wouldn’t work, didn’t you! You were checking that weather station at the vista."
+                "{i}She seems to have come to her final conclusion, all of your actions lining up into an arching conspiracy that lead to this crash.{/i}"
+                "{i}She opens her mouth as if to say more, but nothing comes out, her anger and paranoia too strong to manifest into words.{/i}"
+                "{i}Unable to protest, you feel your body give up, and you collapse on the floor.{/i}"
                 "{i}As you close your eyes, the last thing you see is the radio.{/i}"
                 jump aftermath
             label aftermath:
                 show black with fade
                 hide pass
-                hide cp
                 stop Wind fadeout 5.0
                 stop Hail fadeout 5.0
                 stop Rain fadeout 5.0
@@ -1497,52 +1527,100 @@ label start:
                 hide black with fade
                 "{i}You wake up to a looping radio message.{/i}"
                 Radio "Distress call heard. Please evacuate the vehicle."
-                "{i}Looking around, you don't see [vesta].{/i}"
+                "{i}After a few loops, the sounds begin to distort, the message slowing down as the radio loses power.{/i}"
+                "{i}Looking around, you don't see [vesta], but notice that the emergency hatch on the ceiling of the cockpit is lined with frost, unlocked but closed.{/i}"
+                "{i}Eventually, you manage to drag yourself to your feet, your limbs feeling too frozen to move. Straining to reach the hatch, you open it and make your way outside and find [vesta].{/i}"
         label ending:
-            stop music
-            "{i}Eventually, you make your way outside and find [vesta].{/i}"
             scene rd front
             if friendship > 1:
                 show pass std t
                 with Dissolve(3.0)
-                Pilot "The transport will be here soon."
-
-                Pilot "So, what will you do when you get to Viacaellum?"
                 if friendship > 7:
-                    Passenger "Well, I was thinking that we could find out together."
-                    label menu_ending1:
-                        menu:
-                            "{i}Go with [vesta].{/i}":
-                                Pilot "You know what? I'd love to."
-                                "{i}[Vesta] smiles.{/i}"
-                                jump credits
-                            "{i}Say no.{/i}":
-                                if nationalist_points >0:
-                                    Pilot "Sorry, but I can't."
-                                    Pilot "Look, I don't agree with you, but I hope you find what you're looking for."
-                                    "{i}[Vesta] nods, but it looks like something inside her just broke.{/i}"
-                                    jump credits
-                                else:
-                                    Pilot "Sorry, I don't think I can."
-                                    Pilot "I'm gonna head back to Domatellium. I think some people there could use a ride."
-                                    "{i}[Vesta] smiles and nods, but it looks like something inside her just broke.{/i}"
-                                    jump credits
-                else:
-                    Passenger "I don't know."
-                    Passenger "What about you?"
-                    Pilot "Probably head back to Domatellium. I think some people there could use a ride."
-                    "{i}[Vesta] smiles.{/i}"
-                    "{i}The transport comes and takes both of you and the ship to Viacaellum.{/i}"
-                    jump credits
-            else:
-                show pass std i
-                with Dissolve(3.0)
-                "{i}You both stand outside silently, waiting for the transport to arrive.{/i}"
-                "{i}The transport comes and takes both of you and the ship to Viacaellum.{/i}"
-                "{i}You go back to your job and never see [vesta] again.{/i}"
-                if nameKnown<1:
-                    "{i}You never even learned her name.{/i}"
+                    "{i}You slide down the roof of the cockpit, stumbling slightly as your feet sink into the wet sand that buries your ship.{/i}"
+                    "{i}Making your way gingerly along the unstable surface, you climb onto the road, limping across the cracked and pitted expanse to [vesta], who sits on a rock, observing the striking view of Viacaellum.{/i}"
+                    Passenger "We almost made it."
+                    "{i}She gestures at the city, which stands only a few miles away, a looming dome bursting from a crater.{/i}"
+                    Pilot "Yeah. Crazy to think we were that close and still almost died."
+                    "{i}[Vesta] laughs weakly, which transforms into a cough that racks her whole body.{/i}"
+                    Passenger "Do you have any idea how long it’ll take for the rescue vehicle to get here?"
+                    "{i}You shrug, pointing at the road leading into the city, which appears to be largely submerged in water.{/i}"
+                    Pilot "Until they finish clearing that, it’s gonna be awhile. The roads used to have good drainage systems, but they stopped functioning properly years ago."
+                    Passenger "Huh."
+                    "{i}Glancing over at your ruined ship for a second, [vesta] winces, putting a hand up to her neck.{/i}"
+                    Passenger "So what happens next for you? I know just enough about how vehicles work to say that yours is trashed."
+                    "{i}You follow her gaze, taking in the wreckage. Engine parts and body panels litter the road as far back as you can see, and though [vesta] fixed the largest hole, it doesn’t take much observation to know that it is beyond repair.{/i}"
+                    Pilot "I...don't know."
+                    Pilot "I guess I’d never really thought about the next thing. Not like I’ve got much choice now."
+
+                    "{i}You and [vesta] sigh in union, and she makes a noise of agreement.{/i}"
+                    Passenger "I guess it’s kinda a fresh start for both of us. Or the sudden and brutal end to your old way of life, whichever way you choose to see it."
+                    "{i}She laughs again, and the coughs soon follow.{/i}"
+                    "{i}The two of you sit in silence with that statement for a while, until [vesta] gets up suddenly.{/i}"
+                    Passenger "Do you see that!"
+                    "{i}You squint at the gate to the city, and notice a tiny trail of water and steam rising on the road just in front of the gate.{/i}"
+                    Pilot "I guess our rescue is close at hand."
+                    Passenger "Does that mean our journey together is over?"
+                    "{i}You look over at her, surprised by the question.{/i}"
+                    Pilot "I mean...I guess?"
+                    "{i}[Vesta] watches the trail slowly grow closer for a few moments.{/i}"
+                    Passenger "I guess I don’t want to never see you again."
+                    "{i}She looks away, her posture one of embarrassment.{/i}"
+                    Passenger "I’m sorry, I just--we almost died a bit ago! And both of our old lives are kinda gone now."
+                    Passenger "I guess I’d like to hear from you once you’ve got a grasp on what’s happening again. I can’t help but blame myself for your livelihood getting destroyed."
+                    "{i}She goes silent, and when you try to answer, she interrupts you.{/i}"
+                    Passenger "I don’t need a resolved response. Just...here."
+                    "{i}She rummages around in the pockets of her coat until she finds what she’s looking for: a personal card.{/i}"
+                    Passenger "If you’re ever in Viacaellum again, or that’s where you end up, look me up in a directory."
+                    "{i}The two of you sit for the rest of the time in silence, the card weighing slightly in your pocket.{/i}"
+                    "{i}You don’t know what’s next for you. You might go back to Viacaellum, you might not. Your livelihood, as she put it, is gone.{/i}"
+                    "{i}Whatever the future holds is too foggy for you to know, so you sit and stare at this strange city, waiting for your new life to start.{/i}"
+            elif friendship<-1:
+                "{i}You slide down the roof of the cockpit, stumbling slightly as your feet sink into the wet sand that buries your ship.{/i}"
+                "{i}Making your way gingerly along the unstable surface, you climb onto the road, limping across the cracked and pitted expanse to [vesta], who sits on a rock, observing the striking view of Viacaellum.{/i}"
+                Passenger "I can't believe I almost made it."
+                "{i}She gestures at the city, which stands only a few miles away, a looming dome bursting from a crater.{/i}"
+                Pilot "It’s not too far now. And you heard the message, rescue will be here soon."
+                "{i}[Vesta] laughs weakly, which transforms into a cough that racks her whole body.{/i}"
+                Passenger "Yeah. And not a moment too soon. Do you think it’ll be much longer? The storm has passed for some time now."
+                "{i}You shrug, pointing at the road leading into the city, which appears to be largely submerged in water.{/i}"
+                Pilot "Until they finish clearing that, it’s gonna be awhile. The roads used to have good drainage systems, but they stopped functioning properly years ago."
+                Passenger "I guess [nameNellL] was right about that."
+                "{i}You think back to that time in the refueling station, wondering what else [nameNellL] had told [vesta] before you entered the building.{/i}"
+                "{i}Glancing over at your ruined ship for a second, [vesta] winces, putting a hand up to her neck.{/i}"
+                Passenger "So what happens next for you? I know just enough about how vehicles work to say that yours is trashed."
+                "{i}You follow her gaze, taking in the wreckage. Engine parts and body panels litter the road as far back as you can see, and though [vesta] fixed the largest hole, it doesn’t take much observation to know that it is beyond repair.{/i}"
+                Pilot "I...don't know."
+                Pilot "I guess I’d never really thought about the next thing. Not like I’ve got much choice now."
+                "{i}You sigh, and [vesta] looks over at you, as if unsure of what to say.{/i}"
+                Passenger "I’m sorry about that, I guess. It’s a nasty way to lose a ship."
+                "{i}You snort at this.{/i}"
+                Pilot "I don’t think I’ve ever heard a larger understatement."
+                Passenger "Do you see that!"
+                "{i}You squint at the gate to the city, and notice a tiny trail of water and steam rising on the road just in front of the gate.{/i}"
+                Pilot "I guess our rescue is close at hand."
+                "{i}You squint at the gate to the city, and notice a tiny trail of water and steam rising on the road just in front of the gate.{/i}"
+                Pilot "I guess our rescue is close at hand."
+                Passenger "I guess it is."
+                "{i}She picks herself up from the rock she was leaning against, though still maintaining a hold for support.{/i}"
+                Passenger "I...thank you."
+                "{i}She glances over at you for a moment before turning her eyes back to the road in the distance. She doesn’t quite seem to know what else to say.{/i}"
+                "{i}You let the thanks linger in the air, knowing that there isn’t really any response. Instead, the two of you watch the cloud slowly grow, taking comfort in the end of this arduous journey.{/i}"
+                "{i}[Vesta] is right, however. Your old life, whether you like it or not, isn’t something you’ll ever be able to get back again. Not in the same way, at least.{/i}"
+                "{i}You don’t know what’s next for you. You might go back to Viacaellum, you might not.  You couldn’t have ever foreseen this happening in the future, but there wasn’t really any way to stop it either.{/i}"
+                "{i}Whatever the future holds is too foggy for you to know, so you sit and stare at this strange city, waiting for your new life to start.{/i}"
                 jump credits
+            else:
+                "{i}You slide down the roof of the cockpit, stumbling slightly as your feet sink into the wet sand that buries your ship.{/i}"
+                "{i}Making your way gingerly along the unstable surface, you climb onto the road, limping across the cracked and pitted expanse to [vesta], who sits on a rock, observing the striking view of Viacaellum.{/i}"
+                "{i}[Vesta] sits against a rock on the far side, staring out at Viacaellum. She glances over at you, catching your eye for a split second, but her gaze doesn’t linger.{/i}"
+                "{i}You turn away from her, staring out at the city as well, and let your thoughts run wild.{/i}"
+                "{i}You know your ship is broken. Truly, fully broken.{/i}"
+                "{i}Even the brief glimpse you got of the engine, and trail of debris that stretches back as far as you can see, was enough to know it was far beyond repair.{/i}"
+                "{i}Your life, at least as you knew it, is over. Whatever’s next for you is too unknowable to contemplate at the moment, so instead you focus on the gates of the city.{/i}"
+                "{i}After some time, you catch a glimpse of a miniscule cloud arising from the horizon.{/i}"
+                "{i}It seems as though this terrible journey is finally coming to an end, and you have almost nothing to show for it.{/i}"
+                "{i}You don’t know what’s next for you. You might go back to Viacaellum, you might not.  You couldn’t have ever foreseen this happening in the future, but there wasn’t really any way to stop it either.{/i}"
+                "{i}These thoughts are heavy in your mind, you sit and watch the strange city, waiting for your new life to start. {/i}"
 
     label credits:
         scene black with fade
